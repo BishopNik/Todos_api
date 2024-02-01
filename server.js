@@ -1,13 +1,13 @@
 /** @format */
 
 import { set, connect } from 'mongoose';
-import { listen } from './app';
+import app from './app';
 
 const { DB_HOST, PORT = 4000 } = process.env;
 set('strictQuery', true);
 
 connect(DB_HOST)
-	.then(() => listen(PORT))
+	.then(() => app(PORT))
 	.catch(error => {
 		console.log(error.message);
 		process.exit(1);
