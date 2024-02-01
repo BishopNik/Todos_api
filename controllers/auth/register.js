@@ -1,10 +1,9 @@
 /** @format */
 
-import { hash } from 'bcrypt';
-import { nanoid } from 'nanoid';
+import bcrypt from 'bcrypt';
 
 import { User } from '../../models/index.js';
-import { httpError, sendMailer, createMessage } from '../../utils/index.js';
+import { httpError } from '../../utils/index.js';
 
 export const register = async ({ body }, res) => {
 	const { email, password } = body;
@@ -12,19 +11,15 @@ export const register = async ({ body }, res) => {
 	if (user) {
 		throw httpError(409, 'Email in use');
 	}
-	const hashPassword = await hash(password, 10);
+	const hashPassword = await bcrypt.hash(password, 10);
 
 	const avatarURL = '';
-	const verificationToken = nanoid();
 
 	const newUser = await User.create({
 		...body,
 		password: hashPassword,
 		avatarURL,
-		verificationToken,
 	});
-
-	await sendMailer(createMessage(newUser));
 
 	res.status(201).json({
 		user: {
