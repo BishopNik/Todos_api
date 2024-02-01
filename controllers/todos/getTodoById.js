@@ -1,15 +1,13 @@
 /** @format */
 
-import { Todos } from '../../models';
-import { HttpError } from '../../utils';
+import { Todo } from '../../models/index.js';
+import { httpError } from '../../utils/index.js';
 
-const getTodoById = async ({ params }, res) => {
+export const getTodoById = async ({ params }, res) => {
 	const { todoId } = params;
-	const data = await Todos.findById(todoId).populate('owner', 'name email');
+	const data = await Todo.findById(todoId).populate('owner', 'name email');
 	if (!data) {
-		throw HttpError(404, 'Not found');
+		throw httpError(404, 'Not found');
 	}
 	res.json(data);
 };
-
-export default getTodoById;

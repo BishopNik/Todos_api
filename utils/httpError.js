@@ -13,10 +13,8 @@ const codeHttpError = {
 	409: 'Conflict',
 };
 
-const httpError = (status, message = codeHttpError[status]) => {
+export const httpError = (status, message = codeHttpError[status]) => {
 	const error = new Error(message);
 	error.status = status;
 	return error;
 };
-
-export default httpError;

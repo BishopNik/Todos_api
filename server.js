@@ -1,7 +1,7 @@
 /** @format */
 
 import { set, connect } from 'mongoose';
-import app from './app';
+import app from './app.js';
 
 const { DB_HOST, PORT = 4000 } = process.env;
 set('strictQuery', true);

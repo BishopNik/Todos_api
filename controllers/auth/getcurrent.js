@@ -1,8 +1,8 @@
 /** @format */
 
-import { User } from '../../models';
+import { User } from '../../models/index.js';
 
-const getCurrent = async ({ user }, res) => {
+export const getCurrent = async ({ user }, res) => {
 	const { _id } = user;
 
 	const currentUser = await User.findOne({ _id });
@@ -14,5 +14,3 @@ const getCurrent = async ({ user }, res) => {
 		email: currentUser.email,
 	});
 };
-
-export default getCurrent;

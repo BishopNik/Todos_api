@@ -1,11 +1,9 @@
 /** @format */
 
-import { Todos } from '../../models';
+import { Todo } from '../../models/index.js';
 
-const addTodo = async ({ user, body }, res) => {
+export const addTodo = async ({ user, body }, res) => {
 	const { _id: owner } = user;
-	const data = await Todos.create({ ...body, owner });
+	const data = await Todo.create({ ...body, owner });
 	res.status(201).json(data);
 };
-
-export default addTodo;

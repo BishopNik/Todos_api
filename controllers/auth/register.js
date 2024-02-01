@@ -1,21 +1,20 @@
 /** @format */
 
 import { hash } from 'bcrypt';
-import { url } from 'gravatar';
 import { nanoid } from 'nanoid';
 
-import { User } from '../../models';
-import { HttpError, sendMailer, createMessage } from '../../utils';
+import { User } from '../../models/index.js';
+import { httpError, sendMailer, createMessage } from '../../utils/index.js';
 
-const register = async ({ body }, res) => {
+export const register = async ({ body }, res) => {
 	const { email, password } = body;
 	const user = await User.findOne({ email });
 	if (user) {
-		throw HttpError(409, 'Email in use');
+		throw httpError(409, 'Email in use');
 	}
 	const hashPassword = await hash(password, 10);
 
-	const avatarURL = url(email);
+	const avatarURL = '';
 	const verificationToken = nanoid();
 
 	const newUser = await User.create({
@@ -35,5 +34,3 @@ const register = async ({ body }, res) => {
 		},
 	});
 };
-
-export default register;

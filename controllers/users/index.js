@@ -1,7 +1,3 @@
 /** @format */
 
-import { changeSubscription } from './users.js';
-
-export default {
-	changeSubscription,
-};
+export * from './changeDataUser.js';

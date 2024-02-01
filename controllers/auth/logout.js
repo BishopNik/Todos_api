@@ -1,13 +1,11 @@
 /** @format */
 
-import { User } from '../../models';
+import { User } from '../../models/index.js';
 
-const logout = async ({ user }, res) => {
+export const logout = async ({ user }, res) => {
 	const { _id: id } = user;
 
 	await User.findByIdAndUpdate(id, { token: '' });
 
 	res.status(204).json({});
 };
-
-export default logout;

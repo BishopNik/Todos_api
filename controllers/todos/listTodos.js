@@ -1,24 +1,13 @@
 /** @format */
 
-import { Todos } from '../../models';
+import { Todo } from '../../models/index.js';
 
-const listTodos = async ({ user, query }, res) => {
+export const listTodos = async ({ user }, res) => {
 	const { _id: idUser } = user;
 
-	const { page = 1, perPage = 20, favorite } = query;
-	const skip = (page - 1) * perPage;
-	const data =
-		favorite === undefined
-			? await Todos.find({ owner: idUser }, '-createdAt -updatedAt', {
-					skip,
-					perPage,
-			  }).populate('owner', 'name email')
-			: await Todos.find({ owner: idUser, favorite }, '-createdAt -updatedAt', {
-					skip,
-					perPage,
-			  }).populate('owner', 'name email');
-
+	const data = await Todo.find({ owner: idUser }, '-createdAt -updatedAt', {
+		skip,
+		perPage,
+	}).populate('owner', 'name email');
 	res.json(data);
 };
-
-export default listTodos;

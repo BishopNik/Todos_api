@@ -1,16 +1,14 @@
 /** @format */
 
-import { Contact } from '../models';
-import { HttpError } from '../utils';
+import { Todo } from '../models/index.js';
+import { httpError } from '../utils/index.js';
 
-const checkOwner = async ({ params, user }, _res, next) => {
-	const { contactId } = params;
-	const contact = await Contact.findOne({ _id: contactId });
+export const checkOwner = async ({ params, user }, _res, next) => {
+	const { todoId } = params;
+	const todo = await Todo.findOne({ _id: todoId });
 
-	if (user._id.toString() !== contact?.owner?.toString()) {
-		next(HttpError(404));
+	if (user._id.toString() !== todo?.owner?.toString()) {
+		next(httpError(404));
 	}
 	next();
 };
-
-export default checkOwner;

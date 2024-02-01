@@ -1,38 +1,38 @@
 /** @format */
 
-import { compare } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
-import { User } from '../../models';
-import { HttpError } from '../../utils';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { User } from '../../models/index.js';
+import { httpError } from '../../utils/index.js';
 
 const { SECRET_KEY } = process.env;
 
-const login = async ({ body }, res) => {
+export const login = async ({ body }, res) => {
 	const { email, password } = body;
 
 	const user = await User.findOne({ email });
 
 	if (!user) {
-		throw HttpError(401, 'Email or password is wrong');
+		throw httpError(401, 'Email or password is wrong');
 	}
 
 	if (!user.verify) {
-		throw HttpError(401, 'The user is not confirmed');
+		throw httpError(401, 'The user is not confirmed');
 	}
 
 	if (!user) {
-		throw HttpError(401, 'Email or password is wrong');
+		throw httpError(401, 'Email or password is wrong');
 	}
 
-	const passwordCompare = await compare(password, user.password);
+	const passwordCompare = await bcrypt.compare(password, user.password);
 	if (!passwordCompare) {
-		throw HttpError(401, 'Email or password is wrong');
+		throw httpError(401, 'Email or password is wrong');
 	}
 	const payload = {
 		id: user._id,
 	};
 
-	const token = sign(payload, SECRET_KEY, { expiresIn: '12h' });
+	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '12h' });
 
 	await User.findByIdAndUpdate(user._id, { token });
 
@@ -46,5 +46,3 @@ const login = async ({ body }, res) => {
 		},
 	});
 };
-
-export default login;

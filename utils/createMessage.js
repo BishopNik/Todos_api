@@ -2,7 +2,7 @@
 
 const { BASE_URL } = process.env;
 
-const createMessage = ({ name, email, verificationToken }) => {
+export const createMessage = ({ name, email, verificationToken }) => {
 	const confirmEmail = {
 		to: email,
 		subject: 'Confirm email',
@@ -12,5 +12,3 @@ const createMessage = ({ name, email, verificationToken }) => {
 	};
 	return confirmEmail;
 };
-
-export default { createMessage };

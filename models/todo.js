@@ -1,10 +1,10 @@
 /** @format */
 
 import { Schema, model } from 'mongoose';
-import { object } from 'joi';
-import { handleMongooseError, addUpdateSettings } from '../utils';
+import Joi from 'joi';
+import { handleMongooseError, addUpdateSettings } from '../utils/index.js';
 
-const todosSchema = new Schema(
+const todoSchema = new Schema(
 	{
 		name: {
 			type: String,
@@ -18,17 +18,12 @@ const todosSchema = new Schema(
 	{ versionKey: false, timestamps: true }
 );
 
-todosSchema.post('save', handleMongooseError);
-todosSchema.pre('findOneAndUpdate', addUpdateSettings);
-todosSchema.post('findOneAndUpdate', handleMongooseError);
+todoSchema.post('save', handleMongooseError);
+todoSchema.pre('findOneAndUpdate', addUpdateSettings);
+todoSchema.post('findOneAndUpdate', handleMongooseError);
 
-const todosAddSchema = object({
+export const todoAddSchema = Joi.object({
 	//
 });
 
-const Todos = model('todo', todosSchema);
-
-export default {
-	Todos,
-	todosAddSchema,
-};
+export const Todo = model('todo', todoSchema);

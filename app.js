@@ -5,11 +5,11 @@ import logger from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import boardsRouter from './routes/api/boards';
-import todosRouter from './routes/api/todos';
-import authRouter from './routes/api/auth';
-import usersRouter from './routes/api/users';
-import helpRouter from './routes/api/help';
+import boardsRouter from './routes/api/boards.js';
+import todosRouter from './routes/api/todos.js';
+import authRouter from './routes/api/auth.js';
+import usersRouter from './routes/api/users.js';
+import helpRouter from './routes/api/help.js';
 
 dotenv.config();
 

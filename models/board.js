@@ -1,8 +1,8 @@
 /** @format */
 
 import { Schema, model } from 'mongoose';
-import { object } from 'joi';
-import { handleMongooseError, addUpdateSettings } from '../utils';
+import Joi from 'joi';
+import { handleMongooseError, addUpdateSettings } from '../utils/index.js';
 
 const boardsSchema = new Schema(
 	{
@@ -22,13 +22,8 @@ boardsSchema.post('save', handleMongooseError);
 boardsSchema.pre('findOneAndUpdate', addUpdateSettings);
 boardsSchema.post('findOneAndUpdate', handleMongooseError);
 
-const boardsAddSchema = object({
+export const boardsAddSchema = Joi.object({
 	//
 });
 
-const Boards = model('board', boardsSchema);
-
-export default {
-	Boards,
-	boardsAddSchema,
-};
+export const Boards = model('board', boardsSchema);

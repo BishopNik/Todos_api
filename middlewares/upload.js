@@ -1,9 +1,9 @@
 /** @format */
 
 import multer, { diskStorage } from 'multer';
-import { join } from 'path';
+import path from 'path';
 
-const tempDir = join(__dirname, '../', 'temp');
+const tempDir = path.resolve('temp');
 
 const multerConfig = diskStorage({
 	destination: tempDir,
@@ -13,8 +13,6 @@ const multerConfig = diskStorage({
 	},
 });
 
-const upload = multer({
+export const upload = multer({
 	storage: multerConfig,
 });
-
-export default upload;
