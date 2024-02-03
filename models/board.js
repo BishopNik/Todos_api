@@ -10,6 +10,10 @@ const boardsSchema = new Schema(
 			type: String,
 			required: [true, 'Set name for board'],
 		},
+		icon: {
+			type: String,
+			required: [true, 'Set icon for contact']
+		},
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'user',
@@ -23,7 +27,17 @@ boardsSchema.pre('findOneAndUpdate', addUpdateSettings);
 boardsSchema.post('findOneAndUpdate', handleMongooseError);
 
 export const boardsAddSchema = Joi.object({
-	//
+	name: Joi.string().required().messages({
+        "message": `"missing required name field"`
+	}),
+	icon: Joi.string().required().messages({
+        "message": `"missing required icon field"`
+    }),
 });
+
+export const boardUpdateSchema = Joi.object({
+    name: Joi.string(),
+    icon: Joi.string(),
+})
 
 export const Boards = model('board', boardsSchema);
