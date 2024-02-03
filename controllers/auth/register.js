@@ -1,6 +1,7 @@
 /** @format */
 
 import bcrypt from 'bcrypt';
+import gravatar from "gravatar"
 
 import { User } from '../../models/index.js';
 import { httpError } from '../../utils/index.js';
@@ -13,7 +14,7 @@ export const register = async ({ body }, res) => {
 	}
 	const hashPassword = await bcrypt.hash(password, 10);
 
-	const avatarURL = '';
+	const avatarURL = gravatar.url(email);
 
 	const newUser = await User.create({
 		...body,
