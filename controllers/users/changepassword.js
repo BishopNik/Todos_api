@@ -1,46 +1,31 @@
 /** @format */
 
-import { compare, hash } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
-
-import { User } from '../../models';
-import { HttpError } from '../../utils';
-
+import { compare, hash } from "bcrypt";
+import jwt from "jsonwebtoken";
+import { User } from "../../models/index.js";
+import { httpError } from "../../utils/index.js";
 const { SECRET_KEY } = process.env;
 
-const changePassword = async ({ user, body }, res) => {
-	const { oldPassword, newPassword } = body;
-	const { _id: id } = user;
+export async function changePassword(req, res) {
+  if (!req.body.password) {
+    throw httpError(400, "password is required");
+  }
 
-	const currentUser = await User.findById(id);
+  const { _id, password } = req.user;
+  const { password: newPassword } = req.body;
 
-	if (!currentUser) {
-		throw HttpError(500);
-	}
+  const hashPassword = await hash(newPassword, 10);
+  const isPasswordValid = await compare(newPassword, password);
 
-	const passwordCompare = await compare(oldPassword, currentUser.password);
-	if (!passwordCompare) {
-		throw HttpError(401, 'Password is wrong');
-	}
+  if (isPasswordValid) {
+    throw httpError(
+      400,
+      "new password must be different from current password"
+    );
+  }
+  const payload = { _id };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
 
-	const hashPassword = await hash(newPassword, 10);
-
-	const payload = {
-		id,
-	};
-
-	const token = sign(payload, SECRET_KEY, { expiresIn: '12h' });
-	const updateUser = await User.findByIdAndUpdate(id, { password: hashPassword, token });
-
-	res.json({
-		token: token,
-		user: {
-			id: updateUser._id,
-			name: updateUser.name,
-			email: updateUser.email,
-			avatarURL: updateUser.avatarURL,
-		},
-	});
-};
-
-export default changePassword;
+  await User.findByIdAndUpdate(_id, { password: hashPassword });
+  res.json({ message: "password updated successfully", token });
+}

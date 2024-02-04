@@ -3,8 +3,6 @@
 import { Schema, model } from "mongoose";
 import Joi from "joi";
 
-
-
 export const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userRegisterSchema = new Schema(
@@ -35,11 +33,10 @@ const userRegisterSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-userRegisterSchema.post('save', (err, _data, next) => {
-	err.status = 400;
-	next();
+userRegisterSchema.post("save", (err, _data, next) => {
+  err.status = 400;
+  next();
 });
-
 
 // Check body for register
 export const registerSchema = Joi.object({
@@ -57,6 +54,7 @@ export const loginSchema = Joi.object({
 // Check body for change user data
 export const changeDataSchema = Joi.object({
   name: Joi.string().required(),
+  email: Joi.string().pattern(emailRegexp),
   password: Joi.string().min(6).required(),
 });
 
