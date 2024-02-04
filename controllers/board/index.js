@@ -1,7 +1,14 @@
 /** @format */
 
-import  from '';
+export * from './getAll.js';
+export * from './getById.js';
+export * from './add.js';
+export * from './deleteById.js';
+export * from './updateById.js'
 
-export default {
-	//
-};
+// export default {
+// 	getBorderAll: ctrlWrapper(getBorderAll),
+//     getBorderById: ctrlWrapper(getBorderById),
+//     addBorder: ctrlWrapper(addBorder),
+// };
+
