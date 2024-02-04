@@ -20,7 +20,7 @@ export async function updateAvatar(req, res) {
       return image.resize(250, 250).writeAsync(resultUpload);
     })
     .catch((error) => {
-      HttpError(404, error.message);
+      httpError(404, error.message);
     });
 
   res.json({
