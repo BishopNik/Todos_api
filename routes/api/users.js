@@ -1,16 +1,24 @@
 /** @format */
 
-import { Router } from 'express';
+import { Router } from "express";
 
-import { authenticate, isEmptyBody, upload } from '../../middlewares/index.js';
-import { ctrlWrapper } from '../../utils/index.js';
-import { changeDataUser } from '../../controllers/users/index.js';
+import { authenticate, isEmptyBody, upload, validateBody } from "../../middlewares/index.js";
+import { ctrlWrapper } from "../../utils/index.js";
+import { updateAvatar,updateUserEmail,updateUserName,changePassword} from "../../controllers/users/index.js";
+import { changeDataSchema } from "../../models/user.js";
+
 
 const usersRouter = Router();
 
 usersRouter.use(authenticate);
 
 // User settings
-usersRouter.patch('/avatar', isEmptyBody, upload.single('avatar'), ctrlWrapper(changeDataUser));
+usersRouter.patch("/avatar", upload.single("avatarURL"), ctrlWrapper(updateAvatar));
+
+usersRouter.patch("/name", isEmptyBody,validateBody(changeDataSchema), ctrlWrapper(updateUserName))
+
+usersRouter.patch("/email", isEmptyBody, validateBody(changeDataSchema), ctrlWrapper(updateUserEmail))
+
+usersRouter.patch("/password", isEmptyBody, validateBody(changeDataSchema), ctrlWrapper (changePassword))
 
 export default usersRouter;

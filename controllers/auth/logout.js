@@ -1,11 +1,11 @@
 /** @format */
 
-import { User } from '../../models/index.js';
+import { User } from "../../models/index.js";
 
 export const logout = async ({ user }, res) => {
-	const { _id: id } = user;
+  const { _id: id } = user;
 
-	await User.findByIdAndUpdate(id, { token: '' });
+  await User.findByIdAndUpdate(id, { token: "" });
 
-	res.status(204).json({});
+  res.status(204).json({});
 };

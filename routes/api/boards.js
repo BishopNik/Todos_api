@@ -25,3 +25,4 @@ boardsRouter.put("/:borderId", isValidId, isEmptyBody, validateBody(boardUpdateS
 boardsRouter.delete("/:borderId", isValidId, ctrlWrapper(deleteById))
 
 export default boardsRouter;
+
