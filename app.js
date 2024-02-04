@@ -6,10 +6,13 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import boardsRouter from './routes/api/boards.js';
+import columnRouter from './routes/api/column.js';
+import cardRouter from './routes/api/card.js';
 import todosRouter from './routes/api/todos.js';
 import authRouter from './routes/api/auth.js';
 import usersRouter from './routes/api/users.js';
 import helpRouter from './routes/api/help.js';
+
 
 dotenv.config();
 
@@ -33,6 +36,12 @@ app.use('/api/users', usersRouter);
 
 // Change data board
 app.use('/api/boards', boardsRouter);
+
+// Change data column
+app.use('/api/column', columnRouter);
+
+// Change data column
+app.use('/api/card', cardRouter);
 
 // Send mail
 app.use('/api/help', helpRouter);

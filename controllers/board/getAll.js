@@ -1,7 +1,7 @@
 /** @format */
 import { Boards } from "../../models/index.js";
 
-export const getBorderAll = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
     const { _id: owner } = req.user;
 
     const {page = 1, limit = 20} = req.query;

@@ -1,7 +1,7 @@
 import { Boards } from "../../models/index.js";
 import { httpError } from "../../utils/httpError.js";
 
-export const deleteBorderById = async (req, res, next) => {
+export const deleteById = async (req, res, next) => {
     const {_id: owner} = req.user;
     const { borderId } = req.params;
     const result = await Boards.findByIdAndDelete({borderId, owner});

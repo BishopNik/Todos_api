@@ -1,10 +1,10 @@
 /** @format */
 
-export * from './getBordersAll.js';
-export * from './getBorderById.js';
-export * from './addBorder.js';
-export * from './deleteBorderById.js';
-export * from './updateBorderById.js'
+export * from './getAll.js';
+export * from './getById.js';
+export * from './add.js';
+export * from './deleteById.js';
+export * from './updateById.js'
 
 // export default {
 // 	getBorderAll: ctrlWrapper(getBorderAll),
