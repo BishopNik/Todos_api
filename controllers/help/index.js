@@ -1,7 +1,4 @@
 /** @format */
 
-import  from '';
+export * from './needhelp.js';
 
-export default {
-	//
-};

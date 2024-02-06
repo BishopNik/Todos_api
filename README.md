@@ -11,3 +11,7 @@ routes users
 /api/auth/name  change name
 /api/auth/email  change email
 /api/auth/password  change password
+
+routes need help
+
+/api/help
