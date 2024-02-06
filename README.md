@@ -1,20 +1,20 @@
 routes auth
 
-/api/auth/register
-/api/auth/login
-/api/auth/logout
-/api/auth/current
+(post)/api/auth/register - registeration
+(post)/api/auth/login - login
+(post)/api/auth/logout - logout
+(get)/api/auth/current - get current
 
 routes users
 
-/api/users/avatar  change avatar
-/api/auth/name  change name
-/api/auth/email  change email
-/api/auth/password  change password
+(patch)/api/users/avatar - change avatar
+(patch)/api/auth/name - change name
+(patch)/api/auth/email - change email
+(patch)/api/auth/password - change password
 
 routes need help
 
-/api/help
+(post)/api/help - send mail with comment and email for reply
 
 routes boards
 
