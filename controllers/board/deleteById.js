@@ -1,12 +1,13 @@
 import { Boards } from "../../models/index.js";
-import { httpError } from "../../utils/httpError.js";
+import { httpError } from "../../utils/index.js";
 
 export const deleteById = async (req, res, next) => {
     const {_id: owner} = req.user;
-    const { borderId } = req.params;
-    const result = await Boards.findByIdAndDelete({borderId, owner});
+    const { boardId } = req.params;
+    print(1)
+    const result = await Boards.findByIdAndDelete({_id: boardId, owner});
     if (!result) {
-        throw httpError(404, `Boarder with id=${borderId} not found`);
+        throw httpError(404, `Boarder with id=${boardId} not found`);
     }
 
     res.json({
