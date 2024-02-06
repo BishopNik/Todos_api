@@ -2,9 +2,11 @@
 
 import bcrypt from "bcrypt";
 import gravatar from "gravatar";
+import jwt from "jsonwebtoken";
 
 import { User } from "../../models/index.js";
 import { httpError } from "../../utils/index.js";
+const {SECRET_KEY} = process.env;
 
 export const register = async ({ body }, res) => {
   const { email, password } = body;
@@ -21,8 +23,14 @@ export const register = async ({ body }, res) => {
     password: hashPassword,
     avatarURL,
   });
+  
+  const payload = {
+    id: newUser._id,
+  };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
 
   res.status(201).json({
+    token: token,
     user: {
       avatarURL: newUser.avatarURL,
       name: newUser.name,
