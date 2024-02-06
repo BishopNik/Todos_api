@@ -12,6 +12,10 @@ routes users
 /api/auth/email  change email
 /api/auth/password  change password
 
+routes need help
+
+/api/help
+
 routes boards
 
 (get)/api/boards/ - get boards all 
@@ -35,4 +39,5 @@ routes card
 (post)/api/card/ - add card
 (put)/api/card/:cardId - update card by id
 (delete)/api/card/:cardId - delete card by id
+
 

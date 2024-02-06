@@ -1,21 +1,34 @@
 /** @format */
 
-import { createTransport } from 'nodemailer';
-import dev from 'dotenv';
+import { createTransport } from "nodemailer";
+import dev from "dotenv";
 
 dev.config();
 
 const { SENDMAILER_LOGIN, SENDMAILER_PASSWORD } = process.env;
 
+// Налаштування транспорту для відправки електронних листів
 const transporter = createTransport({
-	service: 'gmail',
-	auth: {
-		user: SENDMAILER_LOGIN,
-		pass: SENDMAILER_PASSWORD,
-	},
+  service: "gmail",
+  auth: {
+    user: SENDMAILER_LOGIN,
+    pass: SENDMAILER_PASSWORD,
+  },
 });
 
-export const sendMailer = async confirmEmail => {
-	const email = { ...confirmEmail, from: SENDMAILER_LOGIN };
-	await transporter.sendMail(email);
+// Функція для відправлення листа
+export const sendEmail = async (text, email) => {
+  try {
+    // Налаштування електронного листа
+    const mailOptions = {
+      from: SENDMAILER_LOGIN,
+      to: "taskpro.project@gmail.com",
+      subject: "Need Help",
+      text: `Comment: ${text}, email for reply: ${email}`,
+    };
+    // Відправлення електронного листа
+    const info = await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
 };
