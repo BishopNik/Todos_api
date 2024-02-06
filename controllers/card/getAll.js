@@ -6,6 +6,6 @@ export const getAll = async (req, res, next) => {
     const {page = 1, limit = 20} = req.query;
     const skip = (page - 1) * limit;
 
-    const result = await Cards.find({ owner }, { skip, limit }).populate("owner", "username");
+    const result = await Cards.find({ owner }).populate("owner", "username");
     res.json(result);
 }

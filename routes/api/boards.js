@@ -14,15 +14,15 @@ const boardsRouter = Router();
 
 boardsRouter.use(authenticate);
 
-boardsRouter.get('/', ctrlWrapper(getAll));
+boardsRouter.get('/', isEmptyBody, ctrlWrapper(getAll));
 
-boardsRouter.get('/:borderId', ctrlWrapper(getById));
+boardsRouter.get('/:boardId',  ctrlWrapper(getById));
 
 boardsRouter.post("/", isEmptyBody, validateBody(boardsAddSchema), ctrlWrapper(add));
 
-boardsRouter.put("/:borderId", isValidId, isEmptyBody, validateBody(boardUpdateSchema), ctrlWrapper(updateById));
+boardsRouter.put("/:boardId",  isEmptyBody, validateBody(boardUpdateSchema), ctrlWrapper(updateById));
 
-boardsRouter.delete("/:borderId", isValidId, ctrlWrapper(deleteById))
+boardsRouter.delete("/:boardId", ctrlWrapper(deleteById));
 
 export default boardsRouter;
 

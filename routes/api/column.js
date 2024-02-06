@@ -16,12 +16,12 @@ columnRouter.use(authenticate);
 
 columnRouter.get('/', ctrlWrapper(getAll));
 
-columnRouter.get('/:borderId', ctrlWrapper(getById));
+columnRouter.get('/:boardId', ctrlWrapper(getById));
 
 columnRouter.post("/", isEmptyBody, validateBody(columnAddSchema), ctrlWrapper(add));
 
-columnRouter.put("/:columnId", isValidId, isEmptyBody, validateBody(columnUpdateSchema), ctrlWrapper(updateById));
+columnRouter.put("/:columnId", isEmptyBody, validateBody(columnUpdateSchema), ctrlWrapper(updateById));
 
-columnRouter.delete("/:columnId", isValidId, ctrlWrapper(deleteById))
+columnRouter.delete("/:columnId", ctrlWrapper(deleteById))
 
 export default columnRouter;
