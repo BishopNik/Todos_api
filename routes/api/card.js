@@ -20,8 +20,8 @@ cardRouter.get('/:columnId', ctrlWrapper(getById));
 
 cardRouter.post("/", isEmptyBody, validateBody(cardAddSchema), ctrlWrapper(add));
 
-cardRouter.put("/:cardId", isValidId, isEmptyBody, validateBody(cardUpdateSchema), ctrlWrapper(updateById));
+cardRouter.put("/:cardId", isEmptyBody, validateBody(cardUpdateSchema), ctrlWrapper(updateById));
 
-cardRouter.delete("/:cardId", isValidId, ctrlWrapper(deleteById))
+cardRouter.delete("/:cardId", ctrlWrapper(deleteById))
 
 export default cardRouter;
