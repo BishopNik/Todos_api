@@ -18,13 +18,27 @@ routes need help
 
 routes boards
 
-(get)/api/boards/ - get boards all 
-(get)/api/boards/:boardId - get boards by id 
+example request
+{
+"name": "string",
+"icon": "string",
+"background": "string"
+}
+
+(get)/api/boards/ - get boards all
+(get)/api/boards/:boardId - get boards by id
 (post)/api/boards/ - add boards
 (put)/api/boards/:boardId - update boards by id
 (delete)/api/boards/:boardId - delete boards by id
 
 routes column
+
+example request
+{
+"name": "string",
+// father board id
+"boarderId": "id"
+}
 
 (get)/api/column/ - get all column
 (get)/api/column/:boardId' - get column by boardId
@@ -34,10 +48,18 @@ routes column
 
 routes card
 
+example request
+{
+name: "string",
+text: "string",
+deadline: "date",
+priority: "without/low/medium/high",
+// father column id
+columnId: "\_id"
+}
+
 (get)/api/card/ - get all card
 (get)/api/card/:columnId' - get card by columnId
 (post)/api/card/ - add card
 (put)/api/card/:cardId - update card by id
 (delete)/api/card/:cardId - delete card by id
-
-
