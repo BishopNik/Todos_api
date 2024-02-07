@@ -21,4 +21,10 @@ authRouter.post('/logout', authenticate, ctrlWrapper(logout));
 // Refresh
 authRouter.get('/current', authenticate, ctrlWrapper(getCurrent));
 
+//Google
+authRouter.get('/google', ctrlWrapper(googleAuth));
+
+//Google-Redirect
+authRouter.get('/google-redirect', ctrlWrapper(googleRedirect));
+
 export default authRouter;
