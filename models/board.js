@@ -14,6 +14,10 @@ const boardsSchema = new Schema(
 			type: String,
 			required: [true, 'Set icon for contact']
 		},
+		background: {
+			type: String,
+			required: [true, 'Set background for contact']
+		},
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'user',
@@ -32,12 +36,16 @@ export const boardsAddSchema = Joi.object({
 	}),
 	icon: Joi.string().required().messages({
         "message": `"missing required icon field"`
-    }),
+	}),
+	background: Joi.string().required().messages({
+        "message": `"missing required background field"`
+	}),
 });
 
 export const boardUpdateSchema = Joi.object({
     name: Joi.string(),
-    icon: Joi.string(),
+	icon: Joi.string(),
+	background: Joi.string(),
 })
 
 export const Boards = model('board', boardsSchema);
