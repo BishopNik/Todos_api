@@ -21,8 +21,8 @@ routes boards
 example request
 {
 "name": "string",
-"icon": "string",
-"background": "string"
+"icon": "0-7",
+"background": "0-14"
 }
 
 (get)/api/boards/ - get boards all

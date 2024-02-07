@@ -34,18 +34,18 @@ export const boardsAddSchema = Joi.object({
 	name: Joi.string().required().messages({
         "message": `"missing required name field"`
 	}),
-	icon: Joi.string().required().messages({
+	icon: Joi.string().min(0).max(7).required().messages({
         "message": `"missing required icon field"`
 	}),
-	background: Joi.string().required().messages({
+	background: Joi.string().min(0).max(14).required().messages({
         "message": `"missing required background field"`
 	}),
 });
 
 export const boardUpdateSchema = Joi.object({
     name: Joi.string(),
-	icon: Joi.string(),
-	background: Joi.string(),
+	icon: Joi.string().min(0).max(7),
+	background: Joi.string().min(0).max(14),
 })
 
 export const Boards = model('board', boardsSchema);
