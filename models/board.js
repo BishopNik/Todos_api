@@ -23,7 +23,7 @@ const boardsSchema = new Schema(
 			ref: 'user',
 		},
 	},
-	{ versionKey: false, timestamps: true }
+	{ versionKey: false}
 );
 
 boardsSchema.post('save', handleMongooseError);

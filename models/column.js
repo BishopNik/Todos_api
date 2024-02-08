@@ -19,7 +19,7 @@ const columnSchema = new Schema(
 			ref: 'user',
 		},
 	},
-	{ versionKey: false, timestamps: true }
+	{ versionKey: false}
 );
 
 columnSchema.post('save', handleMongooseError);
