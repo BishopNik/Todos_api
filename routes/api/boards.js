@@ -2,27 +2,30 @@
 
 import { Router } from 'express';
 
-import { isValidId, validateBody } from '../../middlewares/index.js';
+import { validateBody } from '../../middlewares/index.js';
 import { isEmptyBody } from '../../middlewares/index.js';
 import { authenticate } from '../../middlewares/index.js';
 import { boardUpdateSchema, boardsAddSchema } from '../../models/index.js';
 import { add, deleteById, getAll, getById, updateById } from '../../controllers/board/index.js';
 import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 
-
 const boardsRouter = Router();
 
 boardsRouter.use(authenticate);
 
-boardsRouter.get('/', isEmptyBody, ctrlWrapper(getAll));
+boardsRouter.get('/', ctrlWrapper(getAll));
 
-boardsRouter.get('/:boardId',  ctrlWrapper(getById));
+boardsRouter.get('/:boardId', ctrlWrapper(getById));
 
-boardsRouter.post("/", isEmptyBody, validateBody(boardsAddSchema), ctrlWrapper(add));
+boardsRouter.post('/', isEmptyBody, validateBody(boardsAddSchema), ctrlWrapper(add));
 
-boardsRouter.put("/:boardId",  isEmptyBody, validateBody(boardUpdateSchema), ctrlWrapper(updateById));
+boardsRouter.put(
+	'/:boardId',
+	isEmptyBody,
+	validateBody(boardUpdateSchema),
+	ctrlWrapper(updateById)
+);
 
-boardsRouter.delete("/:boardId", ctrlWrapper(deleteById));
+boardsRouter.delete('/:boardId', ctrlWrapper(deleteById));
 
 export default boardsRouter;
-
