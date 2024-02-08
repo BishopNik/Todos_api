@@ -29,6 +29,8 @@ export const register = async ({ body }, res) => {
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
 
+  await User.findByIdAndUpdate(newUser._id, { token });
+
   res.status(201).json({
     token: token,
     user: {
