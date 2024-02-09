@@ -4,7 +4,6 @@ import { httpError } from "../../utils/index.js";
 export const deleteById = async (req, res, next) => {
     const {_id: owner} = req.user;
     const { boardId } = req.params;
-    print(1)
     const result = await Boards.findByIdAndDelete({_id: boardId, owner});
     if (!result) {
         throw httpError(404, `Boarder with id=${boardId} not found`);

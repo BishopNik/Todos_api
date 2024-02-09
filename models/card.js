@@ -31,7 +31,7 @@ const cardSchema = new Schema(
 			ref: 'user',
 		},
 	},
-	{ versionKey: false, timestamps: true }
+	{ versionKey: false}
 );
 
 cardSchema.post('save', handleMongooseError);
