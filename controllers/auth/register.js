@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
 
-import { User } from "../../models/index.js";
+import { User, Token } from "../../models/index.js";
 import { httpError } from "../../utils/index.js";
 const {SECRET_KEY} = process.env;
 
@@ -29,7 +29,10 @@ export const register = async ({ body }, res) => {
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
 
-  await User.findByIdAndUpdate(newUser._id, { token });
+   await Token.create({
+    userId: newUser._id,
+    token: token,
+  });
 
   res.status(201).json({
     token: token,
