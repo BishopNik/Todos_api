@@ -9,29 +9,29 @@ const cardSchema = new Schema(
 		name: {
 			type: String,
 			required: [true, 'Set name for card'],
-        },
-        text: {
-            type: String,
-        },
-        deadline: {
-            type: String,
-            required: [true, 'Set deadline for card'],
-        },
-        priority: {
-            type: String,
-            enum: ["without","low", "medium", "high"],
-            default: "without"
-        },
-        columnId: {
-            type: String,
-            required: [true, 'Set deadline for card'],
-        },
-		owner:{
+		},
+		text: {
+			type: String,
+		},
+		deadline: {
+			type: String,
+			required: [true, 'Set deadline for card'],
+		},
+		priority: {
+			type: String,
+			enum: ['without', 'low', 'medium', 'high'],
+			default: 'without',
+		},
+		columnId: {
+			type: String,
+			required: [true, 'Set deadline for card'],
+		},
+		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'user',
 		},
 	},
-	{ versionKey: false}
+	{ versionKey: false }
 );
 
 cardSchema.post('save', handleMongooseError);
@@ -39,25 +39,23 @@ cardSchema.pre('findOneAndUpdate', addUpdateSettings);
 cardSchema.post('findOneAndUpdate', handleMongooseError);
 
 export const cardAddSchema = Joi.object({
+	columnId: Joi.string().required().messages({
+		message: `"missing required columnId field"`,
+	}),
 	name: Joi.string().required().messages({
-        "message": `"missing required name field"`
-    }),
-    deadline: Joi.string().required().messages({
-        "message": `"missing required deadline field"`
-    }),
-    columnId: Joi.string().required().messages({
-        "message": `"missing required columnId field"`
-    }),
-    text: Joi.string(),
-    priority: Joi.string(),
+		message: `"missing required name field"`,
+	}),
+	deadline: Joi.string(),
+	text: Joi.string(),
+	priority: Joi.string(),
 });
 
 export const cardUpdateSchema = Joi.object({
-    name: Joi.string(),
-    text: Joi.string(),
-    deadline: Joi.string(),
-    priority: Joi.string(),
-    columnId: Joi.string(),
-})
+	name: Joi.string(),
+	text: Joi.string(),
+	deadline: Joi.string(),
+	priority: Joi.string(),
+	columnId: Joi.string(),
+});
 
 export const Cards = model('card', cardSchema);
