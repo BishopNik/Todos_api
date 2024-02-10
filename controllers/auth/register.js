@@ -52,7 +52,7 @@ export const registerForGoogle = async ({ body }, res) => {
     throw httpError(409, "Email in use");
   }
 
-  // Генерация случайного пароля
+
   const randomPassword = crypto.randomBytes(10).toString('hex');
   const avatarURL = gravatar.url(email);
 
