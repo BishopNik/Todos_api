@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { User } from "../../models/index.js";
-import { httpError } from "../../utils/index.js";
+import { httpError, cloudinary } from "../../utils/index.js";
 import Jimp from "jimp";
 
 export async function updateAvatar(req, res) {
@@ -9,19 +9,21 @@ export async function updateAvatar(req, res) {
     throw httpError(400, "No file uploaded");
   }
   const { _id } = req.user;
-  const { path: oldPath, filename } = req.file;
-  const resultUpload = path.join("avatars", filename);
-  await fs.rename(oldPath, resultUpload);
-  const avatarURL = path.join("avatars", filename);
-  await User.findByIdAndUpdate(_id, { avatarURL });
+  const {url: avatarURL} = await cloudinary.uploader.upload(req.file.path, {
+    folder: "avatars"
+  })
 
-  await Jimp.read(resultUpload)
-    .then((image) => {
-      return image.resize(250, 250).writeAsync(resultUpload);
-    })
-    .catch((error) => {
-      httpError(404, error.message);
-    });
+  
+  // const avatarURL = path.join("avatars", filename);
+  await User.findByIdAndUpdate(_id, { avatarURL });
+  await fs.unlink(req.file.path)
+
+  
+
+    const image = await Jimp.read(avatarURL);
+    await image.resize(250, 250).writeAsync(avatarURL);
+  
+  
 
   res.json({
     avatarURL,
