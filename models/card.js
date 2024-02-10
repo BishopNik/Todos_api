@@ -15,7 +15,6 @@ const cardSchema = new Schema(
 		},
 		deadline: {
 			type: String,
-			required: [true, 'Set deadline for card'],
 		},
 		priority: {
 			type: String,
