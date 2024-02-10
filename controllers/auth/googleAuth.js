@@ -4,7 +4,7 @@ import queryString from "query-string";
 export const googleAuth = async (req, res) => {
     const stringfiedParams = queryString.stringify({
         client_id: process.env.GOOGLE_CLIENT_ID,
-        redirect_uri: `${process.env.BASE_URL}/auth/google-redirect`,
+        redirect_uri: `${process.env.BASE_URL}/api/auth/google-redirect`,
         scope: [
             "https://www.googleapis.com/auth/userinfo.email",
             "https://www.googleapis.com/auth/userinfo.profile",
@@ -15,6 +15,6 @@ export const googleAuth = async (req, res) => {
     });
 
     return res.redirect(
-        `https://accounts.google.com/o/oauth2/v2/auth${stringfiedParams}`
+        `https://accounts.google.com/o/oauth2/v2/auth?${stringfiedParams}`
     )
 }

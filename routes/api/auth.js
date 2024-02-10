@@ -4,7 +4,7 @@ import { Router } from 'express';
 
 import { validateBody, authenticate, isEmptyBody } from '../../middlewares/index.js';
 import { registerSchema, loginSchema } from '../../models/index.js';
-import { register, login, logout, getCurrent } from '../../controllers/auth/index.js';
+import { register, login, logout, getCurrent, googleAuth, googleRedirect } from '../../controllers/auth/index.js';
 import { ctrlWrapper } from '../../utils/index.js';
 
 const authRouter = Router();
