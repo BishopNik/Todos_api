@@ -53,9 +53,16 @@ export const loginSchema = Joi.object({
 
 // Check body for change user data
 export const changeDataSchema = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string(),
   email: Joi.string().pattern(emailRegexp),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().min(6),
+});
+
+
+
+export const registerSchema2 = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().pattern(emailRegexp).required(),
 });
 
 export const User = model("user", userRegisterSchema);
