@@ -3,8 +3,9 @@
 import bcrypt from "bcrypt";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
-import { User, Token, GoogleUser } from "../../models/index.js";
+import { User, Token} from "../../models/index.js";
 import { httpError } from "../../utils/index.js";
 const { SECRET_KEY } = process.env;
 
@@ -51,10 +52,13 @@ export const registerForGoogle = async ({ body }, res) => {
     throw httpError(409, "Email in use");
   }
 
+  // Генерация случайного пароля
+  const randomPassword = crypto.randomBytes(10).toString('hex');
   const avatarURL = gravatar.url(email);
 
-  const newUser = await GoogleUser.create({
+  const newUser = await User.create({
     ...body,
+    password: randomPassword,
     avatarURL,
   });
 

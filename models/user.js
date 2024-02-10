@@ -17,11 +17,11 @@ const userRegisterSchema = new Schema(
       unique: true,
       required: [true, "Set email for user"],
     },
-    // password: {
-    //   type: String,
-    //   minlength: 6,
-    //   required: [true, "Set password for user"],
-    // },
+    password: {
+      type: String,
+      minlength: 6,
+      required: [true, "Set password for user"],
+    },
     token: {
       type: String,
       default: null,
@@ -44,11 +44,11 @@ export const registerSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
 });
-
-// export const registerSchemaForGoogle = Joi.object({
-//   name: Joi.string().required(),
-//   email: Joi.string().pattern(emailRegexp).required(),
-// });
+// Check body for register google
+export const registerSchemaForGoogle = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().pattern(emailRegexp).required(),
+});
 
 
 // Check body for login

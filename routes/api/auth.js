@@ -13,7 +13,7 @@ const authRouter = Router();
 authRouter.post('/register', isEmptyBody, validateBody(registerSchema), ctrlWrapper(register));
 
 //Register for Google
-authRouter.post('/google', isEmptyBody, validateBody(registerSchemaForGoogle), ctrlWrapper(registerForGoogle));
+authRouter.post('/register/google', isEmptyBody, validateBody(registerSchemaForGoogle), ctrlWrapper(registerForGoogle));
 
 // Login
 authRouter.post('/login', isEmptyBody, validateBody(loginSchema), ctrlWrapper(login));
