@@ -37,4 +37,4 @@ export const registerSchemaForGoogle = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
 });
 
-export const Goggle = model("googleuser", userRegisterSchemaGoogle);
+export const GoogleUser = model("googleuser", userRegisterSchemaGoogle);

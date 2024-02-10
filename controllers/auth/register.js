@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
 
-import { User, Token, Usergoogle } from "../../models/index.js";
+import { User, Token, GoogleUser } from "../../models/index.js";
 import { httpError } from "../../utils/index.js";
 const { SECRET_KEY } = process.env;
 
@@ -53,7 +53,7 @@ export const registerForGoogle = async ({ body }, res) => {
 
   const avatarURL = gravatar.url(email);
 
-  const newUser = await User.create({
+  const newUser = await GoogleUser.create({
     ...body,
     avatarURL,
   });
