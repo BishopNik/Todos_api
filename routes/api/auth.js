@@ -3,14 +3,17 @@
 import { Router } from 'express';
 
 import { validateBody, authenticate, isEmptyBody } from '../../middlewares/index.js';
-import { registerSchema, loginSchema } from '../../models/index.js';
-import { register, login, logout, getCurrent } from '../../controllers/auth/index.js';
+import { registerSchema, loginSchema, registerSchemaForGoogle } from '../../models/index.js';
+import { register, login, logout, getCurrent, registerForGoogle } from '../../controllers/auth/index.js';
 import { ctrlWrapper } from '../../utils/index.js';
 
 const authRouter = Router();
 
-// Register
+//Register
 authRouter.post('/register', isEmptyBody, validateBody(registerSchema), ctrlWrapper(register));
+
+//Register for Google
+authRouter.post('/google', isEmptyBody, validateBody(registerSchemaForGoogle), ctrlWrapper(registerForGoogle));
 
 // Login
 authRouter.post('/login', isEmptyBody, validateBody(loginSchema), ctrlWrapper(login));
