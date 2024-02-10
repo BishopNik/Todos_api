@@ -13,9 +13,6 @@ const cardSchema = new Schema(
 		text: {
 			type: String,
 		},
-		deadline: {
-			type: String,
-		},
 		priority: {
 			type: String,
 			enum: ['without', 'low', 'medium', 'high'],
