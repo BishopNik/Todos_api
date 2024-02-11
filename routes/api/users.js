@@ -22,6 +22,6 @@ usersRouter.patch("/email", isEmptyBody, validateBody(changeDataSchema), ctrlWra
 
 usersRouter.patch("/password", isEmptyBody, validateBody(changeDataSchema), ctrlWrapper (changePassword))
 
-usersRouter.patch("/info", upload.single("avatarURL"), isEmptyBody,validateBody(changeDataSchema), ctrlWrapper(updateUserInfo))
+usersRouter.patch("/info", upload.single("avatarURL"), validateBody(changeDataSchema), ctrlWrapper(updateUserInfo))
 
 export default usersRouter;

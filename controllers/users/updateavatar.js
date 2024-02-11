@@ -2,7 +2,6 @@ import fs from "fs/promises";
 import { User } from "../../models/index.js";
 import { httpError, cloudinary } from "../../utils/index.js";
 import Jimp from "jimp";
-import cloudinary from "cloudinary"
 
 export async function updateAvatar(req, res) {
   if (!req.file) {
