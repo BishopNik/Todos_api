@@ -10,6 +10,7 @@ export const deleteById = async (req, res, next) => {
     }
 
     res.json({
-        message: "Delete success"
+        name: result.name,
+        _id: result._id
     })
 }
