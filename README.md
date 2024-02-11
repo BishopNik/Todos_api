@@ -1,6 +1,7 @@
 routes auth
 
 (post)/api/auth/register - registeration
+(post)/register/google - registration
 (post)/api/auth/login - login
 (post)/api/auth/logout - logout
 (get)/api/auth/current - get current

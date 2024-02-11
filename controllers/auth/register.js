@@ -3,10 +3,11 @@
 import bcrypt from "bcrypt";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
-import { User } from "../../models/index.js";
+import { User, Token} from "../../models/index.js";
 import { httpError } from "../../utils/index.js";
-const {SECRET_KEY} = process.env;
+const { SECRET_KEY } = process.env;
 
 export const register = async ({ body }, res) => {
   const { email, password } = body;
@@ -23,13 +24,53 @@ export const register = async ({ body }, res) => {
     password: hashPassword,
     avatarURL,
   });
-  
+
   const payload = {
     id: newUser._id,
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
 
-  await User.findByIdAndUpdate(newUser._id, { token });
+  await Token.create({
+    userId: newUser._id,
+    token: token,
+  });
+
+  res.status(201).json({
+    token: token,
+    user: {
+      avatarURL: newUser.avatarURL,
+      name: newUser.name,
+      email: newUser.email,
+    },
+  });
+};
+
+export const registerForGoogle = async ({ body }, res) => {
+  const { email } = body;
+  const user = await User.findOne({ email });
+  if (user) {
+    throw httpError(409, "Email in use");
+  }
+
+
+  const randomPassword = crypto.randomBytes(10).toString('hex');
+  const avatarURL = gravatar.url(email);
+
+  const newUser = await User.create({
+    ...body,
+    password: randomPassword,
+    avatarURL,
+  });
+
+  const payload = {
+    id: newUser._id,
+  };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
+
+  await Token.create({
+    userId: newUser._id,
+    token: token,
+  });
 
   res.status(201).json({
     token: token,
