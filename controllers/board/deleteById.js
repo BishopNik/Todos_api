@@ -8,8 +8,9 @@ export const deleteById = async (req, res, next) => {
     if (!result) {
         throw httpError(404, `Boarder with id=${boardId} not found`);
     }
-
+    
     res.json({
-        message: "Delete success"
+        name: result.name,
+        _id: result._id
     })
 }
