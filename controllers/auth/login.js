@@ -43,6 +43,7 @@ export const login = async ({ body }, res) => {
       name: user.name,
       email: user.email,
       avatarURL: user.avatarURL,
+      thema: user.thema,
     },
   });
 };
