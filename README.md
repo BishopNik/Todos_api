@@ -8,10 +8,7 @@ routes auth
 
 routes users
 
-(patch)/api/users/avatar - change avatar
-(patch)/api/auth/name - change name
-(patch)/api/auth/email - change email
-(patch)/api/auth/password - change password
+(patch)/api/users/update-user - change avatar,change name,change email,change password
 
 routes need help
 
