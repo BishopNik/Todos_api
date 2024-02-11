@@ -2,7 +2,7 @@
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "../../models/index.js";
+import { User,Token } from "../../models/index.js";
 import { httpError } from "../../utils/index.js";
 
 const { SECRET_KEY } = process.env;
@@ -30,7 +30,11 @@ export const login = async ({ body }, res) => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
 
-  await User.findByIdAndUpdate(user._id, { token });
+  const newToken = new Token({
+    userId: user._id,
+    token: token,
+  });
+  await newToken.save();
 
   res.json({
     token: token,
