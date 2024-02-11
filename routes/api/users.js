@@ -6,6 +6,7 @@ import { authenticate, isEmptyBody, upload, validateBody } from "../../middlewar
 import { ctrlWrapper } from "../../utils/index.js";
 import { updateAvatar,updateUserEmail,updateUserName,changePassword} from "../../controllers/users/index.js";
 import { changeDataSchema } from "../../models/user.js";
+import { updateUserInfo } from "../../controllers/users/changeUserInfo.js";
 
 
 const usersRouter = Router();
@@ -20,5 +21,7 @@ usersRouter.patch("/name", isEmptyBody,validateBody(changeDataSchema), ctrlWrapp
 usersRouter.patch("/email", isEmptyBody, validateBody(changeDataSchema), ctrlWrapper(updateUserEmail))
 
 usersRouter.patch("/password", isEmptyBody, validateBody(changeDataSchema), ctrlWrapper (changePassword))
+
+usersRouter.patch("/info", upload.single("avatarURL"), isEmptyBody,validateBody(changeDataSchema), ctrlWrapper(updateUserInfo))
 
 export default usersRouter;
