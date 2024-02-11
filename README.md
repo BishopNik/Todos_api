@@ -9,6 +9,7 @@ routes auth
 routes users
 
 (patch)/api/users/update-user - change avatar,change name,change email,change password
+(patch)/api/users/thema - change thema 
 
 routes need help
 

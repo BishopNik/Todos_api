@@ -4,6 +4,7 @@ import { Schema, model } from "mongoose";
 import Joi from "joi";
 
 export const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const themaType = ["Light", "Violet", "Dark"]
 
 const userRegisterSchema = new Schema(
   {
@@ -29,6 +30,11 @@ const userRegisterSchema = new Schema(
     avatarURL: {
       type: String,
     },
+    thema: {
+      type: String,
+      enum: themaType,
+      default: "Dark",
+    }
   },
   { versionKey: false, timestamps: true }
 );
@@ -62,6 +68,12 @@ export const changeDataSchema = Joi.object({
   name: Joi.string(),
   email: Joi.string().pattern(emailRegexp),
   password: Joi.string().min(6),
+});
+
+export const updateThemaSchema = Joi.object({
+  thema: Joi.string()
+    .valid(...themaType)
+    .required(),
 });
 
 export const User = model("user", userRegisterSchema);
