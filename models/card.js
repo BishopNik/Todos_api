@@ -14,7 +14,7 @@ const cardSchema = new Schema(
 			type: String,
 		},
 		deadline: {
-			type: String,
+			type: Number,
 		},
 		priority: {
 			type: String,
@@ -44,7 +44,7 @@ export const cardAddSchema = Joi.object({
 	name: Joi.string().required().messages({
 		message: `"missing required name field"`,
 	}),
-	deadline: Joi.string(),
+	deadline: Joi.number(),
 	text: Joi.string(),
 	priority: Joi.string(),
 });
@@ -52,7 +52,7 @@ export const cardAddSchema = Joi.object({
 export const cardUpdateSchema = Joi.object({
 	name: Joi.string(),
 	text: Joi.string(),
-	deadline: Joi.string(),
+	deadline: Joi.number(),
 	priority: Joi.string(),
 	columnId: Joi.string(),
 });
