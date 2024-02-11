@@ -28,22 +28,19 @@ export const googleRedirect = async (req, res) => {
             },
         });
 
-        console.log(userData.data);
-
         const userRegistrationData = {
             email: userData.data.email,
             name: userData.data.name,
         };
 
-        console.log(userRegistrationData);
+        const registerGoogle = await axios({
+            url: `${process.env.BASE_URL}/api/auth/register/google`,
+            method: "post",
+            data: userRegistrationData,
+        });
 
-        // await axios.post('http://localhost:4000/api/auth/register', userRegistrationData);
-
-        return res.redirect(
-            `${process.env.FRONTEND_URL}?email=${userData.data.email}`
-        );
+        return res.json(registerGoogle.data)
     } catch (error) {
-        console.error("An error occurred:", error);
-        return res.status(500).send("An error occurred");
+        return res.status(500).send(error.message);
     }
 }

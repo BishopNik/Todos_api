@@ -71,7 +71,6 @@ export const registerForGoogle = async ({ body }, res) => {
     userId: newUser._id,
     token: token,
   });
-
   res.status(201).json({
     token: token,
     user: {
