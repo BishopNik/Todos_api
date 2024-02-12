@@ -41,6 +41,7 @@ export const register = async ({ body }, res) => {
       avatarURL: newUser.avatarURL,
       name: newUser.name,
       email: newUser.email,
+      thema: newUser.thema,
     },
   });
 };
