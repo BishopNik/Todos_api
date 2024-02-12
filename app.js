@@ -8,11 +8,9 @@ import dotenv from 'dotenv';
 import boardsRouter from './routes/api/boards.js';
 import columnRouter from './routes/api/column.js';
 import cardRouter from './routes/api/card.js';
-import todosRouter from './routes/api/todos.js';
 import authRouter from './routes/api/auth.js';
 import usersRouter from './routes/api/users.js';
 import helpRouter from './routes/api/help.js';
-
 
 dotenv.config();
 
@@ -27,9 +25,6 @@ app.use(express.static('public'));
 
 // Auth
 app.use('/api/auth', authRouter);
-
-// Todos
-app.use('/api/todos', todosRouter);
 
 // Change data user
 app.use('/api/users', usersRouter);
