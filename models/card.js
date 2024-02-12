@@ -37,24 +37,16 @@ cardSchema.post('save', handleMongooseError);
 cardSchema.pre('findOneAndUpdate', addUpdateSettings);
 cardSchema.post('findOneAndUpdate', handleMongooseError);
 
-export const cardAddSchema = Joi.object({
+export const cardSchemaJoi = Joi.object({
 	columnId: Joi.string().required().messages({
 		message: `"missing required columnId field"`,
 	}),
 	name: Joi.string().required().messages({
 		message: `"missing required name field"`,
 	}),
-	deadline: Joi.number(),
-	text: Joi.string(),
-	priority: Joi.string(),
-});
-
-export const cardUpdateSchema = Joi.object({
-	name: Joi.string(),
-	text: Joi.string(),
-	deadline: Joi.number(),
-	priority: Joi.string(),
-	columnId: Joi.string(),
+	deadline: Joi.number().allow(null),
+	text: Joi.string().allow(''),
+	priority: Joi.string().allow(''),
 });
 
 export const Cards = model('card', cardSchema);

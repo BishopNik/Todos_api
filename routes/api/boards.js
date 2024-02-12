@@ -15,17 +15,18 @@ boardsRouter.use(authenticate);
 
 boardsRouter.get('/', ctrlWrapper(getAll));
 
-boardsRouter.get('/:boardId', ctrlWrapper(getById));
+boardsRouter.get('/:boardId', isValidId, ctrlWrapper(getById));
 
 boardsRouter.post('/', isEmptyBody, validateBody(boardsAddSchema), ctrlWrapper(add));
 
 boardsRouter.patch(
 	'/:boardId',
 	isEmptyBody,
+	isValidId,
 	validateBody(boardUpdateSchema),
 	ctrlWrapper(updateById)
 );
 
-boardsRouter.delete('/:boardId', ctrlWrapper(deleteById));
+boardsRouter.delete('/:boardId', isValidId, ctrlWrapper(deleteById));
 
 export default boardsRouter;

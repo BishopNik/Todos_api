@@ -9,19 +9,24 @@ import { columnUpdateSchema, columnAddSchema } from '../../models/index.js';
 import { add, deleteById, getAll, getById, updateById } from '../../controllers/column/index.js';
 import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 
-
 const columnRouter = Router();
 
 columnRouter.use(authenticate);
 
 columnRouter.get('/', ctrlWrapper(getAll));
 
-columnRouter.get('/:boardId', ctrlWrapper(getById));
+columnRouter.get('/:boardId', isValidId, ctrlWrapper(getById));
 
-columnRouter.post("/", isEmptyBody, validateBody(columnAddSchema), ctrlWrapper(add));
+columnRouter.post('/', isEmptyBody, validateBody(columnAddSchema), ctrlWrapper(add));
 
-columnRouter.put("/:columnId", isEmptyBody, validateBody(columnUpdateSchema), ctrlWrapper(updateById));
+columnRouter.put(
+	'/:columnId',
+	isValidId,
+	isEmptyBody,
+	validateBody(columnUpdateSchema),
+	ctrlWrapper(updateById)
+);
 
-columnRouter.delete("/:columnId", ctrlWrapper(deleteById))
+columnRouter.delete('/:columnId', isValidId, ctrlWrapper(deleteById));
 
 export default columnRouter;
