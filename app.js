@@ -11,6 +11,8 @@ import cardRouter from './routes/api/card.js';
 import authRouter from './routes/api/auth.js';
 import usersRouter from './routes/api/users.js';
 import helpRouter from './routes/api/help.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json' assert { type: 'json' };
 
 dotenv.config();
 
@@ -22,6 +24,9 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+
+// Api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Auth
 app.use('/api/auth', authRouter);

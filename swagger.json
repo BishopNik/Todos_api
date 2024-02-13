@@ -1,0 +1,217 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "version": "2.0.2",
+        "title": "home-iot-api",
+        "description": "The API for the EatBacon IOT project"
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "servers": [{"url": "http://localhost:4000"}, {"url": ""}],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authorization endpoints"
+        }
+    ],
+
+
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "User registration",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Registration object",
+                    "required": true,
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "$ref": "#/components/schemas/RegistrationInfo"
+                        }
+                    }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                        "type": "string"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                "type": "string"
+                                                },
+                                                "email": {
+                                                "type": "string"
+                                                },
+                                                "avatarURL": {
+                                                "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+        "post": {
+            "tags": ["Auth"],
+            "summary": "User login",
+            "parameters": [],
+            "security": [{ "Bearer": [] }],
+            "requestBody": {
+                "description": "login object",
+                "required": true,
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "$ref": "#/components/schemas/LoginInfo"
+                    }
+                }
+                }
+            },
+            "responses": {
+            "201": {
+                "description": "successfully registered",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "token": {
+                                "type": "string"
+                                },
+                                "user": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                        "type": "string"
+                                        },
+                                        "name": {
+                                        "type": "string"
+                                        },
+                                        "email": {
+                                        "type": "string"
+                                        },
+                                        "avatarURL": {
+                                        "type": "string"
+                                        },
+                                        "thema": {
+                                        "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            }
+        }
+        },
+        "/auth/logout": {
+        "post": {
+            "tags": ["Auth"],
+            "summary": "User logout",
+            "parameters": [],
+            "security": [{ "Bearer": [] }],
+            "responses": {
+            "204": {
+                "description": ""
+            }
+            }
+        }
+        },
+        "/auth/current": {
+        "get": {
+            "tags": ["Auth"],
+            "summary": "User current data",
+            "parameters": [],
+            "security": [{ "Bearer": [] }],
+            "responses": {
+            "200": {
+                "description": "successfully registered",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                "type": "string"
+                                },
+                                "name": {
+                                "type": "string"
+                                },
+                                "email": {
+                                "type": "string"
+                                },
+                                "avatarURL": {
+                                "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            }
+        }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RegistrationInfo": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                    "type": "string",
+                    "example": "Pavlo"
+                    },
+                    "email": {
+                    "type": "string",
+                    "example": "savyukpavlo12@gmail.com"
+                    },
+                    "password": {
+                    "type": "string",
+                    "example": "123456"
+                    }
+                }
+            },
+            "LoginInfo": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                    "type": "string",
+                    "example": "savyukpavlo12@gmail.com"
+                    },
+                    "password": {
+                    "type": "string",
+                    "example": "123456"
+                    }
+                }
+            }
+        }
+    },
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/SAVYUKPAVLO8/Todos/1.0.0",
+  "schemes": [
+    "https"
+  ]
+}
