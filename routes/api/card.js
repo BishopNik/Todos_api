@@ -19,7 +19,7 @@ cardRouter.get('/:columnId', isValidId, ctrlWrapper(getById));
 
 cardRouter.post('/', isEmptyBody, validateBody(cardSchemaJoi), ctrlWrapper(add));
 
-cardRouter.put(
+cardRouter.patch(
 	'/:cardId',
 	isValidId,
 	isEmptyBody,
