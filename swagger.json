@@ -16,6 +16,10 @@
         {
             "name": "Auth",
             "description": "Authorization endpoints"
+        },
+        {
+            "name": "Boards",
+            "description": "Boards array"
         }
     ],
 
@@ -173,7 +177,283 @@
             }
             }
         }
+        },
+
+        "/boards": {
+            "get": {
+                "tags": ["Boards"],
+                "summary": "Get all user boards",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "_id": {
+                                                "type": "string",
+                                                "example": "65cb32121b768ed2b321e4ea"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "pas"
+                                            },
+                                            "icon": {
+                                                "type": "string",
+                                                "example": "1"
+                                            },
+                                            "background": {
+                                                "type": "string",
+                                                "example": "4"
+                                            },
+                                            "owner": {
+                                                "type": "object",
+                                                "properties": {
+                                                "_id": {
+                                                    "type": "string",
+                                                    "example": "65c1588b623ec1693c4a6a1e"
+                                                }
+                                                }
+                                            }
+                                        },
+                                        "required": ["_id", "name", "icon", "background", "owner"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Boards"],
+                "summary": "Create a new board",
+                "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/BoardsPost"
+                    }
+                    }
+                }
+                },
+                "responses": {
+                "200": {
+                    "description": "Board created successfully",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                            "type": "string",
+                            "example": "pavlo"
+                            },
+                            "icon": {
+                            "type": "string",
+                            "example": "1"
+                            },
+                            "background": {
+                            "type": "string",
+                            "example": "4"
+                            },
+                            "owner": {
+                            "type": "string",
+                            "example": "65c1588b623ec1693c4a6a1e",
+                            "description": "Owner's user ID"
+                            },
+                            "_id": {
+                            "type": "string",
+                            "example": "65cb65e681cdb00ebc7fac94",
+                            "description": "Board ID"
+                            }
+                        }
+                        }
+                    }
+                    }
+                }
+                },
+                "security": [
+                {
+                    "BearerAuth": []
+                }
+                ]
+            }
+        },
+        "/boards/{boardId}": {
+            "get": {
+                "tags": ["Boards"],
+                "summary": "Get a single board by ID",
+                "parameters": [
+                {
+                    "name": "boardId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                    "type": "string"
+                    },
+                    "description": "The ID of the board to retrieve"
+                }
+                ],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                "200": {
+                    "description": "OK",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                            "type": "string",
+                            "example": "65cb32121b768ed2b321e4ea"
+                            },
+                            "name": {
+                            "type": "string",
+                            "example": "pas"
+                            },
+                            "icon": {
+                            "type": "string",
+                            "example": "1"
+                            },
+                            "background": {
+                            "type": "string",
+                            "example": "4"
+                            },
+                            "owner": {
+                            "type": "string",
+                            "example": "65c1588b623ec1693c4a6a1e"
+                            }
+                        },
+                        "required": ["_id", "name", "icon", "background", "owner"]
+                        }
+                    }
+                    }
+                },
+                "400": {
+                    "description": "_id is not valid id"
+                }
+                }
+            },
+            "patch": {
+                "tags": ["Boards"],
+                "summary": "Update board information",
+                "parameters": [
+                {
+                    "name": "boardId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                    "type": "string"
+                    },
+                    "description": "The ID of the board to be updated"
+                }
+                ],
+                "requestBody": {
+                "required": false,
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/BoardsPatch"
+                    }
+                    }
+                }
+                },
+                "responses": {
+                "200": {
+                    "description": "Board updated successfully",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                            "type": "string",
+                            "example": "65cb65e681cdb00ebc7fac94"
+                            },
+                            "name": {
+                            "type": "string",
+                            "example": "Zor"
+                            },
+                            "icon": {
+                            "type": "string",
+                            "example": "4"
+                            },
+                            "background": {
+                            "type": "string",
+                            "example": "4"
+                            },
+                            "owner": {
+                            "type": "string",
+                            "example": "65c1588b623ec1693c4a6a1e"
+                            }
+                        }
+                        }
+                    }
+                    }
+                },
+                "400": {
+                    "description": "_Id is not valid id"
+                }
+                },
+                "security": [
+                {
+                    "BearerAuth": []
+                }
+                ]
+            },
+            "delete": {
+                "tags": ["Boards"],
+                "summary": "Delete a board",
+                "parameters": [
+                {
+                    "name": "boardId",
+                    "in": "path",
+                    "required": true,
+                    "description": "The ID of the board to delete",
+                    "schema": {
+                    "type": "string"
+                    }
+                }
+                ],
+                "responses": {
+                "200": {
+                    "description": "Board deleted successfully",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                            "type": "string",
+                            "example": "Zor"
+                            },
+                            "_id": {
+                            "type": "string",
+                            "example": "65cb65e681cdb00ebc7fac94"
+                            }
+                        }
+                        }
+                    }
+                    }
+                },
+                "400": {
+                    "description": "_Id is not valid id"
+                }
+                },
+                "security": [
+                {
+                    "BearerAuth": []
+                }
+                ]
+            }
         }
+        
     },
     "components": {
         "schemas": {
@@ -206,6 +486,50 @@
                     "example": "123456"
                     }
                 }
+            },
+            "BoardsPost": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "pavlo",
+                        "description": "Name of the board"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "example": "1",
+                        "description": "Icon identifier for the board",
+                        "minLength": 0,
+                        "maxLength": 7
+                    },
+                    "background": {
+                        "type": "string",
+                        "example": "4",
+                        "description": "Background identifier for the board",
+                        "minLength": 0,
+                        "maxLength": 14
+                    }
+                },
+                "required": ["name", "icon", "background"]
+            },
+            "BoardsPatch": {
+                "type": "object",
+                    "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 7
+                    },
+                    "background": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 14
+                    }
+                    },
+                    "minProperties": 1
             }
         }
     },
