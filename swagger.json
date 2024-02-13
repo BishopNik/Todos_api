@@ -2,8 +2,8 @@
     "openapi": "3.0.1",
     "info": {
         "version": "2.0.2",
-        "title": "home-iot-api",
-        "description": "The API for the EatBacon IOT project"
+        "title": "Todos API",
+        "description": "The API for the Todos project"
     },
     "consumes": [
         "application/json"
@@ -28,6 +28,10 @@
         {
             "name": "Card",
             "description": "Card array"
+        },
+        {
+            "name": "Users",
+            "description": "Users array" 
         }
     ],
 
@@ -1018,6 +1022,143 @@
                 },
                 "400": {
                     "description": "_Id is not valid id"
+                }
+                },
+                "security": [
+                {
+                    "BearerAuth": []
+                }
+                ]
+            }
+        },
+
+        "/user/update-user": {
+            "patch": {
+                "tags": ["Users"],
+                "summary": "Update user information",
+                "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "string",
+                            "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+                        },
+                        "password": {
+                            "type": "string",
+                            "minLength": 6
+                        }
+                        },
+                        "minProperties": 1
+                    }
+                    }
+                }
+                },
+                "responses": {
+                "200": {
+                    "description": "OK",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                            "type": "string",
+                            "example": ""
+                            },
+                            "user": {
+                            "type": "object",
+                            "properties": {
+                                "_id": {
+                                "type": "string",
+                                "example": "65c1588b623ec1693c4a6a1e"
+                                },
+                                "name": {
+                                "type": "string",
+                                "example": "Ivan"
+                                },
+                                "avatarURL": {
+                                "type": "string",
+                                "example": ""
+                                }
+                            }
+                            }
+                        }
+                        }
+                    }
+                    }
+                }
+                },
+                "security": [
+                {
+                    "BearerAuth": []
+                }
+                ]
+            }
+        },
+        "/users/thema": {
+            "patch": {
+                "tags": ["Users"],
+                "summary": "Update user theme",
+                "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                        "thema": {
+                            "type": "string",
+                            "enum": ["Light", "Violet", "Dark"],
+                            "example": "Violet",
+                            "description": "User's preferred theme"
+                        }
+                        },
+                        "required": ["thema"]
+                    }
+                    }
+                }
+                },
+                "responses": {
+                "200": {
+                    "description": "OK",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "object",
+                        "properties": {
+                            "user": {
+                            "type": "object",
+                            "properties": {
+                                "_id": {
+                                "type": "string",
+                                "example": "65c1588b623ec1693c4a6a1e"
+                                },
+                                "name": {
+                                "type": "string",
+                                "example": "John Doe"
+                                },
+                                "email": {
+                                "type": "string",
+                                "example": "johndoe@example.com"
+                                },
+                                "thema": {
+                                "type": "string",
+                                "example": "Violet",
+                                "enum": ["Light", "Violet", "Dark"]
+                                }
+                            }
+                            }
+                        }
+                        }
+                    }
+                    }
                 }
                 },
                 "security": [
