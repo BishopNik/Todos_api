@@ -12,7 +12,7 @@ const columnSchema = new Schema(
 		},
 		boardId: {
 			type: String,
-			required: [true, 'Set boarderId for board'],
+			required: [true, 'Set boardId for board'],
 		},
 		owner: {
 			type: Schema.Types.ObjectId,
