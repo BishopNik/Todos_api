@@ -15,7 +15,8 @@ export async function updateUserInfo(req, res) {
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-  let avatarURL = "";
+  
+  let avatarURL = user.avatarURL;
 
   if (req.file) {
     const image = await Jimp.read(req.file.path);
@@ -54,6 +55,7 @@ export async function updateUserInfo(req, res) {
       name,
       email,
       avatarURL,
+      thema: user.thema,
     },
   });
 }

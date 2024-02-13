@@ -12,5 +12,6 @@ export const getCurrent = async ({ user }, res) => {
     avatarURL: currentUser.avatarURL,
     name: currentUser.name,
     email: currentUser.email,
+    thema: currentUser.thema,
   });
 };
