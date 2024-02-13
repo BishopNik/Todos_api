@@ -19,7 +19,7 @@ columnRouter.get('/:boardId', isValidId, ctrlWrapper(getById));
 
 columnRouter.post('/', isEmptyBody, validateBody(columnAddSchema), ctrlWrapper(add));
 
-columnRouter.put(
+columnRouter.patch(
 	'/:columnId',
 	isValidId,
 	isEmptyBody,
