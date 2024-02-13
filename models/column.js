@@ -10,7 +10,7 @@ const columnSchema = new Schema(
 			type: String,
 			required: [true, 'Set name for board'],
 		},
-		boarderId: {
+		boardId: {
 			type: String,
 			required: [true, 'Set boarderId for board'],
 		},
@@ -19,7 +19,7 @@ const columnSchema = new Schema(
 			ref: 'user',
 		},
 	},
-	{ versionKey: false}
+	{ versionKey: false }
 );
 
 columnSchema.post('save', handleMongooseError);
@@ -28,16 +28,16 @@ columnSchema.post('findOneAndUpdate', handleMongooseError);
 
 export const columnAddSchema = Joi.object({
 	name: Joi.string().required().messages({
-        "message": `"missing required name field"`
+		message: `"missing required name field"`,
 	}),
-	boarderId: Joi.string().required().messages({
-        "message": `"missing required name field"`
+	boardId: Joi.string().required().messages({
+		message: `"missing required name field"`,
 	}),
 });
 
 export const columnUpdateSchema = Joi.object({
 	name: Joi.string(),
-	boarderId: Joi.string(),
-})
+	boardId: Joi.string(),
+});
 
 export const Columns = model('column', columnSchema);
