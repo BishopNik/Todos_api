@@ -11,7 +11,7 @@
     "produces": [
         "application/json"
     ],
-    "servers": [{"url": "http://localhost:4000"}, {"url": ""}],
+    "servers": [{"url": "http://localhost:4000"}, {"url": "https://todos-api-i1vi.onrender.com"}],
     "tags": [
         {
             "name": "Auth",
