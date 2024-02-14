@@ -6,8 +6,8 @@ import { httpError } from '../../utils/index.js';
 export const deleteById = async (req, res, next) => {
 	const { _id: owner } = req.user;
 	const { boardId } = req.params;
-	const res = await Columns.find({ boardId, owner });
-	res.map(async item => await Cards.findByIdAndDelete({ columnId: item._id, owner }));
+	const resColumn = await Columns.find({ boardId, owner });
+	resColumn.map(async item => await Cards.findByIdAndDelete({ columnId: item._id, owner }));
 	await Columns.findByIdAndDelete({ boardId, owner });
 	const result = await Boards.findByIdAndDelete({ _id: boardId, owner });
 	if (!result) {
