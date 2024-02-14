@@ -64,8 +64,8 @@ export const loginSchema = Joi.object({
 
 // Check body for change user data
 export const changeDataSchema = Joi.object({
-	name: Joi.string(),
-	email: Joi.string().pattern(emailRegexp),
+	name: Joi.string().allow(null, '').optional(),
+	email: Joi.string().pattern(emailRegexp).allow(null, '').optional(),
 	password: Joi.string().min(6).allow(null, '').optional(),
 });
 
