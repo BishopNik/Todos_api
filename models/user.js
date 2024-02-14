@@ -67,6 +67,7 @@ export const changeDataSchema = Joi.object({
 	name: Joi.string().allow(null, '').optional(),
 	email: Joi.string().pattern(emailRegexp).allow(null, '').optional(),
 	password: Joi.string().min(6).allow(null, '').optional(),
+	avatarURL: Joi.string().allow(null, '').optional(),
 });
 
 export const updateThemaSchema = Joi.object({
