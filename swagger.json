@@ -1328,6 +1328,14 @@
                     },
                     "minProperties": 1
             }
+        },
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "Enter JWT token obtained after logging in"
+            }
         }
     },
   "host": "virtserver.swaggerhub.com",
