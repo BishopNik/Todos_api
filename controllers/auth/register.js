@@ -1,83 +1,85 @@
 /** @format */
 
-import bcrypt from "bcrypt";
-import gravatar from "gravatar";
-import jwt from "jsonwebtoken";
-import crypto from "crypto";
+import bcrypt from 'bcrypt';
+import gravatar from 'gravatar';
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
-import { User, Token} from "../../models/index.js";
-import { httpError } from "../../utils/index.js";
+import { User, Token } from '../../models/index.js';
+import { httpError } from '../../utils/index.js';
 const { SECRET_KEY } = process.env;
 
 export const register = async ({ body }, res) => {
-  const { email, password } = body;
-  const user = await User.findOne({ email });
-  if (user) {
-    throw httpError(409, "Email in use");
-  }
-  const hashPassword = await bcrypt.hash(password, 10);
+	const { email, password } = body;
+	const user = await User.findOne({ email });
+	if (user) {
+		throw httpError(409, 'Email in use');
+	}
+	const hashPassword = await bcrypt.hash(password, 10);
 
-  const avatarURL = gravatar.url(email);
+	const avatarURL = gravatar.url(email);
 
-  const newUser = await User.create({
-    ...body,
-    password: hashPassword,
-    avatarURL,
-  });
+	const newUser = await User.create({
+		...body,
+		password: hashPassword,
+		avatarURL,
+	});
 
-  const payload = {
-    id: newUser._id,
-  };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
+	const payload = {
+		id: newUser._id,
+	};
 
-  await Token.create({
-    userId: newUser._id,
-    token: token,
-  });
+	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '12h' });
 
-  res.status(201).json({
-    token: token,
-    user: {
-      avatarURL: newUser.avatarURL,
-      name: newUser.name,
-      email: newUser.email,
-      thema: newUser.thema,
-    },
-  });
+	await Token.create({
+		userId: newUser._id,
+		token: token,
+	});
+
+	res.status(201).json({
+		token: token,
+		user: {
+			avatarURL: newUser.avatarURL,
+			name: newUser.name,
+			email: newUser.email,
+			thema: newUser.thema,
+		},
+	});
 };
 
 export const registerForGoogle = async ({ body }, res) => {
-  const { email } = body;
-  const user = await User.findOne({ email });
-  if (user) {
-    throw httpError(409, "Email in use");
-  }
+	const { email } = body;
+	const user = await User.findOne({ email });
+	if (user) {
+		throw httpError(409, 'Email in use');
+	}
 
+	const randomPassword = crypto.randomBytes(10).toString('hex');
+	const avatarURL = gravatar.url(email);
 
-  const randomPassword = crypto.randomBytes(10).toString('hex');
-  const avatarURL = gravatar.url(email);
+	const newUser = await User.create({
+		...body,
+		password: randomPassword,
+		avatarURL,
+	});
 
-  const newUser = await User.create({
-    ...body,
-    password: randomPassword,
-    avatarURL,
-  });
+	const payload = {
+		id: newUser._id,
+	};
 
-  const payload = {
-    id: newUser._id,
-  };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
+	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '12h' });
 
-  await Token.create({
-    userId: newUser._id,
-    token: token,
-  });
-  res.status(201).json({
-    token: token,
-    user: {
-      avatarURL: newUser.avatarURL,
-      name: newUser.name,
-      email: newUser.email,
-    },
-  });
+	await Token.create({
+		userId: newUser._id,
+		token: token,
+	});
+
+	res.status(201).json({
+		token: token,
+		user: {
+			avatarURL: newUser.avatarURL,
+			name: newUser.name,
+			email: newUser.email,
+		},
+	});
 };
