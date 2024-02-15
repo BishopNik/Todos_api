@@ -23,7 +23,7 @@ export const authenticate = async (req, res, next) => {
 			return next(httpError(401, 'Not authorized'));
 		}
 
-		const tokenData = await Token.findOne({ userId: id, token: token }); //запрос для поиска токена, соответствующего пользователю и данному токену
+		const tokenData = await Token.findOne({ userId: id, token: token });
 		if (!tokenData) {
 			return next(httpError(401, 'Not authorized'));
 		}
