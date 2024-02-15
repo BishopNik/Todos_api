@@ -11,7 +11,6 @@ const { SECRET_KEY } = process.env;
 
 export async function updateUserInfo(req, res) {
 	const { _id } = req.user;
-	const { token } = req.token;
 	const { name, password = '' } = req.body;
 	const user = await User.findById(_id);
 
@@ -45,7 +44,7 @@ export async function updateUserInfo(req, res) {
 
 	const resp = {};
 	if (password) {
-		await Token.deleteMany({ userId: id, token });
+		await Token.deleteMany({ userId: _id, token: req.token });
 
 		const payload = { id: updatedUser._id };
 		const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '12h' });
