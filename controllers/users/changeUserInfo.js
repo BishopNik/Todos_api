@@ -28,7 +28,7 @@ export async function updateUserInfo(req, res) {
 		const result = await cloudinary.uploader.upload(req.file.path, {
 			folder: 'avatars',
 		});
-		avatarURL = result.url;
+		avatarURL = result.url.replace('http://', 'https://');
 		await fs.unlink(req.file.path);
 	}
 
