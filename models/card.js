@@ -29,6 +29,10 @@ const cardSchema = new Schema(
 			type: Schema.Types.ObjectId,
 			ref: 'user',
 		},
+		indexCard: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ versionKey: false }
 );
@@ -47,6 +51,7 @@ export const cardSchemaJoi = Joi.object({
 	deadline: Joi.number().allow(null),
 	text: Joi.string().allow(''),
 	priority: Joi.string().allow(''),
+	indexCard: Joi.number(),
 });
 
 export const Cards = model('card', cardSchema);
