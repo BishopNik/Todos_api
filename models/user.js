@@ -50,11 +50,6 @@ export const registerSchema = Joi.object({
 	email: Joi.string().pattern(emailRegexp).required(),
 	password: Joi.string().min(6).required(),
 });
-// Check body for register google
-export const registerSchemaForGoogle = Joi.object({
-	name: Joi.string().required(),
-	email: Joi.string().pattern(emailRegexp).required(),
-});
 
 // Check body for login
 export const loginSchema = Joi.object({

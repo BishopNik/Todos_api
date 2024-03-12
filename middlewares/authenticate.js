@@ -18,13 +18,9 @@ export const authenticate = async (req, res, next) => {
 	try {
 		const { id } = jwt.verify(token, SECRET_KEY);
 		const user = await User.findById(id);
+		const tokenData = await Token.findOne({ userId: id, token });
 
-		if (!user) {
-			return next(httpError(401, 'Not authorized'));
-		}
-
-		const tokenData = await Token.findOne({ userId: id, token: token });
-		if (!tokenData) {
+		if (!user || !tokenData) {
 			return next(httpError(401, 'Not authorized'));
 		}
 
@@ -33,6 +29,7 @@ export const authenticate = async (req, res, next) => {
 
 		next();
 	} catch (error) {
+		Token.findByIdAndDelete({ token });
 		next(httpError(401, 'Not authorized'));
 	}
 };

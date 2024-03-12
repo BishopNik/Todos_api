@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User, Token } from '../../models/index.js';
 import { httpError } from '../../utils/index.js';
+import { checkUserToken } from '../../utils/deleteInValidToken.js';
 
 const { SECRET_KEY } = process.env;
 
@@ -21,21 +22,23 @@ export const login = async ({ body }, res) => {
 	if (!passwordCompare) {
 		throw httpError(401, 'Email or password is wrong');
 	}
+
 	const payload = {
 		id: user._id,
 	};
+
+	checkUserToken(user._id);
 
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '12h' });
 
 	const newToken = new Token({
 		userId: user._id,
-		token: token,
+		token,
 	});
-
 	await newToken.save();
 
 	res.json({
-		token: token,
+		token,
 		user: {
 			id: user._id,
 			name: user.name,
