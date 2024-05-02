@@ -1,1346 +1,1359 @@
 {
-    "openapi": "3.0.1",
-    "info": {
-        "version": "2.0.2",
-        "title": "Todos API",
-        "description": "The API for the Todos project"
-    },
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
-    "servers": [{"url": "http://localhost:4000/api"}, {"url": "https://todos-api-i1vi.onrender.com/api"}],
-    "tags": [
-        {
-            "name": "Auth",
-            "description": "Authorization endpoints"
-        },
-        {
-            "name": "Boards",
-            "description": "Boards array"
-        },
-        {
-            "name": "Column",
-            "description": "Column array"
-        },
-        {
-            "name": "Card",
-            "description": "Card array"
-        },
-        {
-            "name": "Users",
-            "description": "Users array" 
-        }
-    ],
+	"openapi": "3.0.1",
+	"info": {
+		"version": "2.0.2",
+		"title": "Todos API",
+		"description": "The API for the Todos project"
+	},
+	"import": {
+		"type": "json"
+	},
+	"consumes": ["application/json"],
+	"produces": ["application/json"],
+	"servers": [
+		{ "url": "http://localhost:4000/api" },
+		{ "url": "https://todos-api-i1vi.onrender.com/api" }
+	],
+	"tags": [
+		{
+			"name": "Auth",
+			"description": "Authorization endpoints"
+		},
+		{
+			"name": "Boards",
+			"description": "Boards array"
+		},
+		{
+			"name": "Column",
+			"description": "Column array"
+		},
+		{
+			"name": "Card",
+			"description": "Card array"
+		},
+		{
+			"name": "Users",
+			"description": "Users array"
+		}
+	],
 
+	"paths": {
+		"/auth/register": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "User registration",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"requestBody": {
+					"description": "Registration object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RegistrationInfo"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "successfully registered",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"token": {
+											"type": "string"
+										},
+										"user": {
+											"type": "object",
+											"properties": {
+												"name": {
+													"type": "string"
+												},
+												"email": {
+													"type": "string"
+												},
+												"avatarURL": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "User login",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"requestBody": {
+					"description": "login object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginInfo"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "successfully registered",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"token": {
+											"type": "string"
+										},
+										"user": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string"
+												},
+												"name": {
+													"type": "string"
+												},
+												"email": {
+													"type": "string"
+												},
+												"avatarURL": {
+													"type": "string"
+												},
+												"thema": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/logout": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "User logout",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"204": {
+						"description": ""
+					}
+				}
+			}
+		},
+		"/auth/current": {
+			"get": {
+				"tags": ["Auth"],
+				"summary": "User current data",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "successfully registered",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										},
+										"email": {
+											"type": "string"
+										},
+										"avatarURL": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 
-    "paths": {
-        "/auth/register": {
-            "post": {
-                "tags": ["Auth"],
-                "summary": "User registration",
-                "parameters": [],
-                "security": [{ "Bearer": [] }],
-                "requestBody": {
-                    "description": "Registration object",
-                    "required": true,
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "$ref": "#/components/schemas/RegistrationInfo"
-                        }
-                    }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "successfully registered",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "token": {
-                                        "type": "string"
-                                        },
-                                        "user": {
-                                            "type": "object",
-                                            "properties": {
-                                                "name": {
-                                                "type": "string"
-                                                },
-                                                "email": {
-                                                "type": "string"
-                                                },
-                                                "avatarURL": {
-                                                "type": "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/login": {
-        "post": {
-            "tags": ["Auth"],
-            "summary": "User login",
-            "parameters": [],
-            "security": [{ "Bearer": [] }],
-            "requestBody": {
-                "description": "login object",
-                "required": true,
-                "content": {
-                "application/json": {
-                    "schema": {
-                    "$ref": "#/components/schemas/LoginInfo"
-                    }
-                }
-                }
-            },
-            "responses": {
-            "201": {
-                "description": "successfully registered",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "token": {
-                                "type": "string"
-                                },
-                                "user": {
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                        "type": "string"
-                                        },
-                                        "name": {
-                                        "type": "string"
-                                        },
-                                        "email": {
-                                        "type": "string"
-                                        },
-                                        "avatarURL": {
-                                        "type": "string"
-                                        },
-                                        "thema": {
-                                        "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            }
-        }
-        },
-        "/auth/logout": {
-        "post": {
-            "tags": ["Auth"],
-            "summary": "User logout",
-            "parameters": [],
-            "security": [{ "Bearer": [] }],
-            "responses": {
-            "204": {
-                "description": ""
-            }
-            }
-        }
-        },
-        "/auth/current": {
-        "get": {
-            "tags": ["Auth"],
-            "summary": "User current data",
-            "parameters": [],
-            "security": [{ "Bearer": [] }],
-            "responses": {
-            "200": {
-                "description": "successfully registered",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                "type": "string"
-                                },
-                                "name": {
-                                "type": "string"
-                                },
-                                "email": {
-                                "type": "string"
-                                },
-                                "avatarURL": {
-                                "type": "string"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            }
-        }
-        },
+		"/boards": {
+			"get": {
+				"tags": ["Boards"],
+				"summary": "Get all user boards",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string",
+												"example": "65cb32121b768ed2b321e4ea"
+											},
+											"name": {
+												"type": "string",
+												"example": "pas"
+											},
+											"icon": {
+												"type": "string",
+												"example": "1"
+											},
+											"background": {
+												"type": "string",
+												"example": "4"
+											},
+											"owner": {
+												"type": "object",
+												"properties": {
+													"_id": {
+														"type": "string",
+														"example": "65c1588b623ec1693c4a6a1e"
+													}
+												}
+											}
+										},
+										"required": ["_id", "name", "icon", "background", "owner"]
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Boards"],
+				"summary": "Create a new board",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BoardsPost"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Board created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"example": "pavlo"
+										},
+										"icon": {
+											"type": "string",
+											"example": "1"
+										},
+										"background": {
+											"type": "string",
+											"example": "4"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e",
+											"description": "Owner's user ID"
+										},
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94",
+											"description": "Board ID"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			}
+		},
+		"/boards/{boardId}": {
+			"get": {
+				"tags": ["Boards"],
+				"summary": "Get a single board by ID",
+				"parameters": [
+					{
+						"name": "boardId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The ID of the board to retrieve"
+					}
+				],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string",
+											"example": "65cb32121b768ed2b321e4ea"
+										},
+										"name": {
+											"type": "string",
+											"example": "pas"
+										},
+										"icon": {
+											"type": "string",
+											"example": "1"
+										},
+										"background": {
+											"type": "string",
+											"example": "4"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e"
+										}
+									},
+									"required": ["_id", "name", "icon", "background", "owner"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_id is not valid id"
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Boards"],
+				"summary": "Update board information",
+				"parameters": [
+					{
+						"name": "boardId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The ID of the board to be updated"
+					}
+				],
+				"requestBody": {
+					"required": false,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BoardsPatch"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Board updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94"
+										},
+										"name": {
+											"type": "string",
+											"example": "Zor"
+										},
+										"icon": {
+											"type": "string",
+											"example": "4"
+										},
+										"background": {
+											"type": "string",
+											"example": "4"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_Id is not valid id"
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			},
+			"delete": {
+				"tags": ["Boards"],
+				"summary": "Delete a board",
+				"parameters": [
+					{
+						"name": "boardId",
+						"in": "path",
+						"required": true,
+						"description": "The ID of the board to delete",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Board deleted successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"example": "Zor"
+										},
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_Id is not valid id"
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			}
+		},
 
-        "/boards": {
-            "get": {
-                "tags": ["Boards"],
-                "summary": "Get all user boards",
-                "parameters": [],
-                "security": [{ "Bearer": [] }],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "_id": {
-                                                "type": "string",
-                                                "example": "65cb32121b768ed2b321e4ea"
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "example": "pas"
-                                            },
-                                            "icon": {
-                                                "type": "string",
-                                                "example": "1"
-                                            },
-                                            "background": {
-                                                "type": "string",
-                                                "example": "4"
-                                            },
-                                            "owner": {
-                                                "type": "object",
-                                                "properties": {
-                                                "_id": {
-                                                    "type": "string",
-                                                    "example": "65c1588b623ec1693c4a6a1e"
-                                                }
-                                                }
-                                            }
-                                        },
-                                        "required": ["_id", "name", "icon", "background", "owner"]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["Boards"],
-                "summary": "Create a new board",
-                "requestBody": {
-                "required": true,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/BoardsPost"
-                    }
-                    }
-                }
-                },
-                "responses": {
-                "200": {
-                    "description": "Board created successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                            "type": "string",
-                            "example": "pavlo"
-                            },
-                            "icon": {
-                            "type": "string",
-                            "example": "1"
-                            },
-                            "background": {
-                            "type": "string",
-                            "example": "4"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e",
-                            "description": "Owner's user ID"
-                            },
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94",
-                            "description": "Board ID"
-                            }
-                        }
-                        }
-                    }
-                    }
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            }
-        },
-        "/boards/{boardId}": {
-            "get": {
-                "tags": ["Boards"],
-                "summary": "Get a single board by ID",
-                "parameters": [
-                {
-                    "name": "boardId",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                    "type": "string"
-                    },
-                    "description": "The ID of the board to retrieve"
-                }
-                ],
-                "security": [{ "Bearer": [] }],
-                "responses": {
-                "200": {
-                    "description": "OK",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb32121b768ed2b321e4ea"
-                            },
-                            "name": {
-                            "type": "string",
-                            "example": "pas"
-                            },
-                            "icon": {
-                            "type": "string",
-                            "example": "1"
-                            },
-                            "background": {
-                            "type": "string",
-                            "example": "4"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e"
-                            }
-                        },
-                        "required": ["_id", "name", "icon", "background", "owner"]
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_id is not valid id"
-                }
-                }
-            },
-            "patch": {
-                "tags": ["Boards"],
-                "summary": "Update board information",
-                "parameters": [
-                {
-                    "name": "boardId",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                    "type": "string"
-                    },
-                    "description": "The ID of the board to be updated"
-                }
-                ],
-                "requestBody": {
-                "required": false,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/BoardsPatch"
-                    }
-                    }
-                }
-                },
-                "responses": {
-                "200": {
-                    "description": "Board updated successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94"
-                            },
-                            "name": {
-                            "type": "string",
-                            "example": "Zor"
-                            },
-                            "icon": {
-                            "type": "string",
-                            "example": "4"
-                            },
-                            "background": {
-                            "type": "string",
-                            "example": "4"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e"
-                            }
-                        }
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_Id is not valid id"
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            },
-            "delete": {
-                "tags": ["Boards"],
-                "summary": "Delete a board",
-                "parameters": [
-                {
-                    "name": "boardId",
-                    "in": "path",
-                    "required": true,
-                    "description": "The ID of the board to delete",
-                    "schema": {
-                    "type": "string"
-                    }
-                }
-                ],
-                "responses": {
-                "200": {
-                    "description": "Board deleted successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                            "type": "string",
-                            "example": "Zor"
-                            },
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94"
-                            }
-                        }
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_Id is not valid id"
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            }
-        },
+		"/column": {
+			"get": {
+				"tags": ["Column"],
+				"summary": "Get all user column",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string",
+												"example": "65cb32121b768ed2b321e4ea"
+											},
+											"name": {
+												"type": "string",
+												"example": "pas"
+											},
+											"boarderId": {
+												"type": "string",
+												"example": "65cb32121b768ed2b321e4ea"
+											},
+											"owner": {
+												"type": "object",
+												"properties": {
+													"_id": {
+														"type": "string",
+														"example": "65c1588b623ec1693c4a6a1e"
+													}
+												}
+											}
+										},
+										"required": ["_id", "name", "boarderId", "owner"]
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Column"],
+				"summary": "Create a new column",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ColumnPost"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Column created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"example": "pavlo"
+										},
+										"boarderId": {
+											"type": "string",
+											"example": "65cb32121b768ed2b321e4ea"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e",
+											"description": "Owner's user ID"
+										},
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94",
+											"description": "Board ID"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			}
+		},
+		"/column/{boardId}": {
+			"get": {
+				"tags": ["Column"],
+				"summary": "Get a column by boardId",
+				"parameters": [
+					{
+						"name": "boardId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The ID of the board"
+					}
+				],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string",
+											"example": "65cb32121b768ed2b321e4ea"
+										},
+										"name": {
+											"type": "string",
+											"example": "pas"
+										},
+										"boarderId": {
+											"type": "string",
+											"example": "65cb32121b768ed2b321e4ea"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e"
+										}
+									},
+									"required": ["_id", "name", "boarderId", "owner"]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_id is not valid id"
+					}
+				}
+			}
+		},
+		"/column/{columnId}": {
+			"patch": {
+				"tags": ["Column"],
+				"summary": "Update column information",
+				"parameters": [
+					{
+						"name": "columnId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The ID of the column to be updated"
+					}
+				],
+				"requestBody": {
+					"required": false,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ColumnPatch"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "column updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94"
+										},
+										"name": {
+											"type": "string",
+											"example": "Zor"
+										},
+										"boarderId": {
+											"type": "string",
+											"example": "65cb32121b768ed2b321e4ea"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_Id is not valid id"
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			},
+			"delete": {
+				"tags": ["Column"],
+				"summary": "Delete a column",
+				"parameters": [
+					{
+						"name": "columnId",
+						"in": "path",
+						"required": true,
+						"description": "The ID of the column to delete",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Column deleted successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"example": "Zor"
+										},
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_Id is not valid id"
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			}
+		},
 
-        "/column": {
-            "get": {
-                "tags": ["Column"],
-                "summary": "Get all user column",
-                "parameters": [],
-                "security": [{ "Bearer": [] }],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "_id": {
-                                                "type": "string",
-                                                "example": "65cb32121b768ed2b321e4ea"
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "example": "pas"
-                                            },
-                                            "boarderId": {
-                                                "type": "string",
-                                                "example": "65cb32121b768ed2b321e4ea"
-                                            },
-                                            "owner": {
-                                                "type": "object",
-                                                "properties": {
-                                                "_id": {
-                                                    "type": "string",
-                                                    "example": "65c1588b623ec1693c4a6a1e"
-                                                }
-                                                }
-                                            }
-                                        },
-                                        "required": ["_id", "name", "boarderId", "owner"]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["Column"],
-                "summary": "Create a new column",
-                "requestBody": {
-                "required": true,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/ColumnPost"
-                    }
-                    }
-                }
-                },
-                "responses": {
-                "200": {
-                    "description": "Column created successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                            "type": "string",
-                            "example": "pavlo"
-                            },
-                            "boarderId": {
-                            "type": "string",
-                            "example": "65cb32121b768ed2b321e4ea"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e",
-                            "description": "Owner's user ID"
-                            },
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94",
-                            "description": "Board ID"
-                            }
-                        }
-                        }
-                    }
-                    }
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            }
-        },
-        "/column/{boardId}": {
-            "get": {
-                "tags": ["Column"],
-                "summary": "Get a column by boardId",
-                "parameters": [
-                {
-                    "name": "boardId",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                    "type": "string"
-                    },
-                    "description": "The ID of the board"
-                }
-                ],
-                "security": [{ "Bearer": [] }],
-                "responses": {
-                "200": {
-                    "description": "OK",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb32121b768ed2b321e4ea"
-                            },
-                            "name": {
-                            "type": "string",
-                            "example": "pas"
-                            },
-                            "boarderId": {
-                            "type": "string",
-                            "example": "65cb32121b768ed2b321e4ea"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e"
-                            }
-                        },
-                        "required": ["_id", "name", "boarderId", "owner"]
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_id is not valid id"
-                }
-                }
-            }
-        },
-        "/column/{columnId}": {
-            "patch": {
-                "tags": ["Column"],
-                "summary": "Update column information",
-                "parameters": [
-                {
-                    "name": "columnId",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                    "type": "string"
-                    },
-                    "description": "The ID of the column to be updated"
-                }
-                ],
-                "requestBody": {
-                "required": false,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/ColumnPatch"
-                    }
-                    }
-                }
-                },
-                "responses": {
-                "200": {
-                    "description": "column updated successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94"
-                            },
-                            "name": {
-                            "type": "string",
-                            "example": "Zor"
-                            },
-                            "boarderId": {
-                                "type": "string",
-                                "example": "65cb32121b768ed2b321e4ea"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e"
-                            }
-                        }
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_Id is not valid id"
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            },
-            "delete": {
-                "tags": ["Column"],
-                "summary": "Delete a column",
-                "parameters": [
-                {
-                    "name": "columnId",
-                    "in": "path",
-                    "required": true,
-                    "description": "The ID of the column to delete",
-                    "schema": {
-                    "type": "string"
-                    }
-                }
-                ],
-                "responses": {
-                "200": {
-                    "description": "Column deleted successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                            "type": "string",
-                            "example": "Zor"
-                            },
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94"
-                            }
-                        }
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_Id is not valid id"
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            }
-        },
+		"/card": {
+			"get": {
+				"tags": ["Card"],
+				"summary": "Get all user card",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string",
+												"example": "65cb32121b768ed2b321e4ea"
+											},
+											"name": {
+												"type": "string",
+												"example": "task"
+											},
+											"text": {
+												"type": "string",
+												"example": "go to"
+											},
+											"deadline": {
+												"type": "Number"
+											},
+											"priority": {
+												"type": "string",
+												"example": "without"
+											},
+											"columnId": {
+												"type": "string",
+												"example": "65cb76b2554c359c6c79b7cb"
+											},
+											"owner": {
+												"type": "object",
+												"properties": {
+													"_id": {
+														"type": "string",
+														"example": "65c1588b623ec1693c4a6a1e"
+													}
+												}
+											}
+										},
+										"required": [
+											"_id",
+											"name",
+											"columnId",
+											"priority",
+											"deadline",
+											"text",
+											"owner"
+										]
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Card"],
+				"summary": "Create a new card",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CardPost"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Card created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"example": "pavlo"
+										},
+										"text": {
+											"type": "string",
+											"example": "go to"
+										},
+										"deadline": {
+											"type": "Number"
+										},
+										"priority": {
+											"type": "string",
+											"example": "without"
+										},
+										"columnId": {
+											"type": "string",
+											"example": "65cb76b2554c359c6c79b7cb"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e",
+											"description": "Owner's user ID"
+										},
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94",
+											"description": "Board ID"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			}
+		},
+		"/card/{columnId}": {
+			"get": {
+				"tags": ["Card"],
+				"summary": "Get a card by columnId",
+				"parameters": [
+					{
+						"name": "columnId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The ID of the board"
+					}
+				],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string",
+											"example": "65cb32121b768ed2b321e4ea"
+										},
+										"name": {
+											"type": "string",
+											"example": "pas"
+										},
+										"text": {
+											"type": "string",
+											"example": "go to"
+										},
+										"deadline": {
+											"type": "Number"
+										},
+										"priority": {
+											"type": "string",
+											"example": "without"
+										},
+										"columnId": {
+											"type": "string",
+											"example": "65cb76b2554c359c6c79b7cb"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e"
+										}
+									},
+									"required": [
+										"_id",
+										"name",
+										"columnId",
+										"priority",
+										"text",
+										"owner"
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_id is not valid id"
+					}
+				}
+			}
+		},
+		"/card/{cardId}": {
+			"patch": {
+				"tags": ["Card"],
+				"summary": "Update card information",
+				"parameters": [
+					{
+						"name": "cardId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The ID of the card to be updated"
+					}
+				],
+				"requestBody": {
+					"required": false,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CardPatch"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "card updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94"
+										},
+										"name": {
+											"type": "string",
+											"example": "Zor"
+										},
+										"text": {
+											"type": "string",
+											"example": "go to"
+										},
+										"deadline": {
+											"type": "Number"
+										},
+										"priority": {
+											"type": "string",
+											"example": "without"
+										},
+										"columnId": {
+											"type": "string",
+											"example": "65cb76b2554c359c6c79b7cb"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_Id is not valid id"
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			},
+			"delete": {
+				"tags": ["Card"],
+				"summary": "Delete a card",
+				"parameters": [
+					{
+						"name": "cardId",
+						"in": "path",
+						"required": true,
+						"description": "The ID of the card to delete",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Card deleted successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"example": "Zor"
+										},
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_Id is not valid id"
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			}
+		},
 
-        "/card": {
-            "get": {
-                "tags": ["Card"],
-                "summary": "Get all user card",
-                "parameters": [],
-                "security": [{ "Bearer": [] }],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "_id": {
-                                                "type": "string",
-                                                "example": "65cb32121b768ed2b321e4ea"
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "example": "task"
-                                            },
-                                            "text": {
-                                                "type": "string",
-                                                "example": "go to"
-                                            },
-                                            "deadline": {
-                                                "type": "Number"
-                                            },
-                                            "priority": {
-                                                "type": "string",
-                                                "example": "without"
-                                            },
-                                            "columnId": {
-                                                "type": "string",
-                                                "example": "65cb76b2554c359c6c79b7cb"
-                                            },
-                                            "owner": {
-                                                "type": "object",
-                                                "properties": {
-                                                "_id": {
-                                                    "type": "string",
-                                                    "example": "65c1588b623ec1693c4a6a1e"
-                                                }
-                                                }
-                                            }
-                                        },
-                                        "required": ["_id", "name", "columnId", "priority", "deadline", "text", "owner"]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["Card"],
-                "summary": "Create a new card",
-                "requestBody": {
-                "required": true,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/CardPost"
-                    }
-                    }
-                }
-                },
-                "responses": {
-                "200": {
-                    "description": "Card created successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                            "type": "string",
-                            "example": "pavlo"
-                            },
-                            "text": {
-                                "type": "string",
-                                "example": "go to"
-                            },
-                            "deadline": {
-                                "type": "Number"
-                            },
-                            "priority": {
-                                "type": "string",
-                                "example": "without"
-                            },
-                            "columnId": {
-                                "type": "string",
-                                "example": "65cb76b2554c359c6c79b7cb"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e",
-                            "description": "Owner's user ID"
-                            },
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94",
-                            "description": "Board ID"
-                            }
-                        }
-                        }
-                    }
-                    }
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            }
-        },
-        "/card/{columnId}": {
-            "get": {
-                "tags": ["Card"],
-                "summary": "Get a card by columnId",
-                "parameters": [
-                {
-                    "name": "columnId",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                    "type": "string"
-                    },
-                    "description": "The ID of the board"
-                }
-                ],
-                "security": [{ "Bearer": [] }],
-                "responses": {
-                "200": {
-                    "description": "OK",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb32121b768ed2b321e4ea"
-                            },
-                            "name": {
-                            "type": "string",
-                            "example": "pas"
-                            },
-                            "text": {
-                                "type": "string",
-                                "example": "go to"
-                            },
-                            "deadline": {
-                                "type": "Number"
-                            },
-                            "priority": {
-                                "type": "string",
-                                "example": "without"
-                            },
-                            "columnId": {
-                                "type": "string",
-                                "example": "65cb76b2554c359c6c79b7cb"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e"
-                            }
-                        },
-                        "required": ["_id", "name", "columnId", "priority", "text", "owner"]
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_id is not valid id"
-                }
-                }
-            }
-        },
-        "/card/{cardId}": {
-            "patch": {
-                "tags": ["Card"],
-                "summary": "Update card information",
-                "parameters": [
-                {
-                    "name": "cardId",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                    "type": "string"
-                    },
-                    "description": "The ID of the card to be updated"
-                }
-                ],
-                "requestBody": {
-                "required": false,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/CardPatch"
-                    }
-                    }
-                }
-                },
-                "responses": {
-                "200": {
-                    "description": "card updated successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94"
-                            },
-                            "name": {
-                            "type": "string",
-                            "example": "Zor"
-                            },
-                            "text": {
-                                "type": "string",
-                                "example": "go to"
-                            },
-                            "deadline": {
-                                "type": "Number"
-                            },
-                            "priority": {
-                                "type": "string",
-                                "example": "without"
-                            },
-                            "columnId": {
-                                "type": "string",
-                                "example": "65cb76b2554c359c6c79b7cb"
-                            },
-                            "owner": {
-                            "type": "string",
-                            "example": "65c1588b623ec1693c4a6a1e"
-                            }
-                        }
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_Id is not valid id"
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            },
-            "delete": {
-                "tags": ["Card"],
-                "summary": "Delete a card",
-                "parameters": [
-                {
-                    "name": "cardId",
-                    "in": "path",
-                    "required": true,
-                    "description": "The ID of the card to delete",
-                    "schema": {
-                    "type": "string"
-                    }
-                }
-                ],
-                "responses": {
-                "200": {
-                    "description": "Card deleted successfully",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                            "type": "string",
-                            "example": "Zor"
-                            },
-                            "_id": {
-                            "type": "string",
-                            "example": "65cb65e681cdb00ebc7fac94"
-                            }
-                        }
-                        }
-                    }
-                    }
-                },
-                "400": {
-                    "description": "_Id is not valid id"
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            }
-        },
-
-        "/user/update-user": {
-            "patch": {
-                "tags": ["Users"],
-                "summary": "Update user information",
-                "requestBody": {
-                "required": true,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                        "name": {
-                            "type": "string",
-                            "example": "Pavlo"
-                        },
-                        "email": {
-                            "type": "string",
-                            "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-                            "example": "savyukpavlo12@gmail.com"
-                        },
-                        "password": {
-                            "type": "string",
-                            "minLength": 6,
-                            "example": "123456"
-                        }
-                        },
-                        "minProperties": 1
-                    }
-                    }
-                }
-                },
-                "responses": {
-                "200": {
-                    "description": "OK",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "token": {
-                            "type": "string",
-                            "example": ""
-                            },
-                            "user": {
-                            "type": "object",
-                            "properties": {
-                                "_id": {
-                                "type": "string",
-                                "example": "65c1588b623ec1693c4a6a1e"
-                                },
-                                "name": {
-                                "type": "string",
-                                "example": "Ivan"
-                                },
-                                "avatarURL": {
-                                "type": "string",
-                                "example": ""
-                                }
-                            }
-                            }
-                        }
-                        }
-                    }
-                    }
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            }
-        },
-        "/users/thema": {
-            "patch": {
-                "tags": ["Users"],
-                "summary": "Update user theme",
-                "requestBody": {
-                "required": true,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                        "thema": {
-                            "type": "string",
-                            "enum": ["Light", "Violet", "Dark"],
-                            "example": "Violet",
-                            "description": "User's preferred theme"
-                        }
-                        },
-                        "required": ["thema"]
-                    }
-                    }
-                }
-                },
-                "responses": {
-                "200": {
-                    "description": "OK",
-                    "content": {
-                    "application/json": {
-                        "schema": {
-                        "type": "object",
-                        "properties": {
-                            "user": {
-                            "type": "object",
-                            "properties": {
-                                "_id": {
-                                "type": "string",
-                                "example": "65c1588b623ec1693c4a6a1e"
-                                },
-                                "name": {
-                                "type": "string",
-                                "example": "John Doe"
-                                },
-                                "email": {
-                                "type": "string",
-                                "example": "johndoe@example.com"
-                                },
-                                "thema": {
-                                "type": "string",
-                                "example": "Violet",
-                                "enum": ["Light", "Violet", "Dark"]
-                                }
-                            }
-                            }
-                        }
-                        }
-                    }
-                    }
-                }
-                },
-                "security": [
-                {
-                    "BearerAuth": []
-                }
-                ]
-            }
-        }
-        
-    },
-    "components": {
-        "schemas": {
-            "RegistrationInfo": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                    "type": "string",
-                    "example": "Pavlo"
-                    },
-                    "email": {
-                    "type": "string",
-                    "example": "savyukpavlo12@gmail.com"
-                    },
-                    "password": {
-                    "type": "string",
-                    "example": "123456"
-                    }
-                }
-            },
-            "LoginInfo": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                    "type": "string",
-                    "example": "savyukpavlo12@gmail.com"
-                    },
-                    "password": {
-                    "type": "string",
-                    "example": "123456"
-                    }
-                }
-            },
-            "BoardsPost": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "example": "pavlo",
-                        "description": "Name of the board"
-                    },
-                    "icon": {
-                        "type": "string",
-                        "example": "1",
-                        "description": "Icon identifier for the board",
-                        "minLength": 0,
-                        "maxLength": 7
-                    },
-                    "background": {
-                        "type": "string",
-                        "example": "4",
-                        "description": "Background identifier for the board",
-                        "minLength": 0,
-                        "maxLength": 14
-                    }
-                },
-                "required": ["name", "icon", "background"]
-            },
-            "BoardsPatch": {
-                "type": "object",
-                    "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "icon": {
-                        "type": "string",
-                        "minLength": 0,
-                        "maxLength": 7
-                    },
-                    "background": {
-                        "type": "string",
-                        "minLength": 0,
-                        "maxLength": 14
-                    }
-                    },
-                    "minProperties": 1
-            },
-            "ColumnPost": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "example": "pavlo",
-                        "description": "Name of the Column"
-                    },
-                    "boarderId": {
-                        "type": "string",
-                        "example": "65cb32121b768ed2b321e4ea",
-                        "description": "board id"
-                    }
-                },
-                "required": ["name", "background"]
-            },
-            "ColumnPatch": {
-                "type": "object",
-                    "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "boarderId": {
-                        "type": "string",
-                        "example": "65cb32121b768ed2b321e4ea"
-                    }
-                    },
-                    "minProperties": 1
-            },
-            "CardPost": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "example": "pavlo",
-                        "description": "Name of the Column"
-                    },
-                    "text": {
-                        "type": "string",
-                        "example": "go to"
-                    },
-                    "deadline": {
-                        "type": "Number"
-                    },
-                    "priority": {
-                        "type": "string",
-                        "example": "without"
-                    },
-                    "columnId": {
-                        "type": "string",
-                        "example": "65cb76b2554c359c6c79b7cb"
-                    }
-                },
-                "required": ["name", "columnId", "priority", "text"]
-            },
-            "CardPatch": {
-                "type": "object",
-                    "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "text": {
-                        "type": "string",
-                        "example": "go to"
-                    },
-                    "deadline": {
-                        "type": "Number"
-                    },
-                    "priority": {
-                        "type": "string",
-                        "example": "without"
-                    },
-                    "columnId": {
-                        "type": "string",
-                        "example": "65cb76b2554c359c6c79b7cb"
-                    }
-                    },
-                    "minProperties": 1
-            }
-        },
-        "securitySchemes": {
-            "BearerAuth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT",
-                "description": "Enter JWT token obtained after logging in"
-            }
-        }
-    },
-  "host": "virtserver.swaggerhub.com",
-  "basePath": "/SAVYUKPAVLO8/Todos/1.0.0",
-  "schemes": [
-    "https"
-  ]
+		"/user/update-user": {
+			"patch": {
+				"tags": ["Users"],
+				"summary": "Update user information",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"example": "Pavlo"
+									},
+									"email": {
+										"type": "string",
+										"pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+										"example": "savyukpavlo12@gmail.com"
+									},
+									"password": {
+										"type": "string",
+										"minLength": 6,
+										"example": "123456"
+									}
+								},
+								"minProperties": 1
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"token": {
+											"type": "string",
+											"example": ""
+										},
+										"user": {
+											"type": "object",
+											"properties": {
+												"_id": {
+													"type": "string",
+													"example": "65c1588b623ec1693c4a6a1e"
+												},
+												"name": {
+													"type": "string",
+													"example": "Ivan"
+												},
+												"avatarURL": {
+													"type": "string",
+													"example": ""
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			}
+		},
+		"/users/thema": {
+			"patch": {
+				"tags": ["Users"],
+				"summary": "Update user theme",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"thema": {
+										"type": "string",
+										"enum": ["Light", "Violet", "Dark"],
+										"example": "Violet",
+										"description": "User's preferred theme"
+									}
+								},
+								"required": ["thema"]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"user": {
+											"type": "object",
+											"properties": {
+												"_id": {
+													"type": "string",
+													"example": "65c1588b623ec1693c4a6a1e"
+												},
+												"name": {
+													"type": "string",
+													"example": "John Doe"
+												},
+												"email": {
+													"type": "string",
+													"example": "johndoe@example.com"
+												},
+												"thema": {
+													"type": "string",
+													"example": "Violet",
+													"enum": ["Light", "Violet", "Dark"]
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				]
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"RegistrationInfo": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "Pavlo"
+					},
+					"email": {
+						"type": "string",
+						"example": "savyukpavlo12@gmail.com"
+					},
+					"password": {
+						"type": "string",
+						"example": "123456"
+					}
+				}
+			},
+			"LoginInfo": {
+				"type": "object",
+				"properties": {
+					"email": {
+						"type": "string",
+						"example": "savyukpavlo12@gmail.com"
+					},
+					"password": {
+						"type": "string",
+						"example": "123456"
+					}
+				}
+			},
+			"BoardsPost": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "pavlo",
+						"description": "Name of the board"
+					},
+					"icon": {
+						"type": "string",
+						"example": "1",
+						"description": "Icon identifier for the board",
+						"minLength": 0,
+						"maxLength": 7
+					},
+					"background": {
+						"type": "string",
+						"example": "4",
+						"description": "Background identifier for the board",
+						"minLength": 0,
+						"maxLength": 14
+					}
+				},
+				"required": ["name", "icon", "background"]
+			},
+			"BoardsPatch": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"icon": {
+						"type": "string",
+						"minLength": 0,
+						"maxLength": 7
+					},
+					"background": {
+						"type": "string",
+						"minLength": 0,
+						"maxLength": 14
+					}
+				},
+				"minProperties": 1
+			},
+			"ColumnPost": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "pavlo",
+						"description": "Name of the Column"
+					},
+					"boarderId": {
+						"type": "string",
+						"example": "65cb32121b768ed2b321e4ea",
+						"description": "board id"
+					}
+				},
+				"required": ["name", "background"]
+			},
+			"ColumnPatch": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"boarderId": {
+						"type": "string",
+						"example": "65cb32121b768ed2b321e4ea"
+					}
+				},
+				"minProperties": 1
+			},
+			"CardPost": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "pavlo",
+						"description": "Name of the Column"
+					},
+					"text": {
+						"type": "string",
+						"example": "go to"
+					},
+					"deadline": {
+						"type": "Number"
+					},
+					"priority": {
+						"type": "string",
+						"example": "without"
+					},
+					"columnId": {
+						"type": "string",
+						"example": "65cb76b2554c359c6c79b7cb"
+					}
+				},
+				"required": ["name", "columnId", "priority", "text"]
+			},
+			"CardPatch": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string",
+						"example": "go to"
+					},
+					"deadline": {
+						"type": "Number"
+					},
+					"priority": {
+						"type": "string",
+						"example": "without"
+					},
+					"columnId": {
+						"type": "string",
+						"example": "65cb76b2554c359c6c79b7cb"
+					}
+				},
+				"minProperties": 1
+			}
+		},
+		"securitySchemes": {
+			"BearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT",
+				"description": "Enter JWT token obtained after logging in"
+			}
+		}
+	},
+	"host": "virtserver.swaggerhub.com",
+	"basePath": "/SAVYUKPAVLO8/Todos/1.0.0",
+	"schemes": ["https"]
 }
