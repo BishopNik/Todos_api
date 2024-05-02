@@ -12,7 +12,7 @@ import authRouter from './routes/api/auth.js';
 import usersRouter from './routes/api/users.js';
 import helpRouter from './routes/api/help.js';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json';
+import swaggerDocument from './swagger.json' with { type: "json" };
 
 dotenv.config();
 
