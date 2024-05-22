@@ -93,7 +93,6 @@
 				"tags": ["Auth"],
 				"summary": "User login",
 				"parameters": [],
-				"security": [{ "Bearer": [] }],
 				"requestBody": {
 					"description": "login object",
 					"required": true,
@@ -293,7 +292,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
@@ -416,7 +415,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			},
@@ -461,7 +460,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
@@ -560,7 +559,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
@@ -677,7 +676,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			},
@@ -722,7 +721,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
@@ -851,7 +850,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
@@ -997,7 +996,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			},
@@ -1042,7 +1041,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
@@ -1116,7 +1115,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
@@ -1182,7 +1181,7 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
@@ -1345,7 +1344,7 @@
 			}
 		},
 		"securitySchemes": {
-			"BearerAuth": {
+			"Bearer": {
 				"type": "http",
 				"scheme": "bearer",
 				"bearerFormat": "JWT",
